@@ -1,22 +1,19 @@
 package me.arasple.mc.trhologram.module.listener
 
-import io.izzel.taboolib.module.inject.TListener
-import io.izzel.taboolib.util.lite.cooldown.Cooldown
 import me.arasple.mc.trhologram.module.display.Hologram
-import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
+import me.arasple.mc.trhologram.util.Cooldown
 import org.bukkit.event.player.PlayerMoveEvent
+import taboolib.common.platform.event.SubscribeEvent
 
 /**
  * @author Arasple
  * @date 2021/2/11 9:58
  */
-@TListener
-class ListenerMovement : Listener {
+object ListenerMovement {
 
     val cd = Cooldown("TrHologram:MoveCheck", 1)
 
-    @EventHandler
+    @SubscribeEvent
     fun onMove(e: PlayerMoveEvent) {
         val player = e.player
 

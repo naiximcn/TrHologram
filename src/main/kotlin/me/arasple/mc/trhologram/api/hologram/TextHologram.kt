@@ -49,7 +49,7 @@ class TextHologram(
     }
 
     override fun onTick() {
-        Performance.MIRROR.check("Hologram:Event:Tick:TextComponent") {
+        Performance.check("Hologram:Event:Tick:TextComponent") {
             forViewers { updateName(it) }
         }
     }

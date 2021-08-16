@@ -1,12 +1,8 @@
 package me.arasple.mc.trhologram.module.display.texture
 
-import io.izzel.taboolib.Version
-import io.izzel.taboolib.internal.xseries.XMaterial
-import io.izzel.taboolib.util.Strings
-import io.izzel.taboolib.util.item.ItemBuilder
-import io.izzel.taboolib.util.item.Items
 import me.arasple.mc.trhologram.api.base.ItemTexture
 import me.arasple.mc.trhologram.util.Heads
+import me.arasple.mc.trhologram.util.ItemHelper
 import me.arasple.mc.trhologram.util.containsPlaceholder
 import me.arasple.mc.trhologram.util.parseString
 import org.bukkit.Color
@@ -15,6 +11,10 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.SkullMeta
+import taboolib.common.util.Strings.similarDegree
+import taboolib.library.xseries.XMaterial
+import taboolib.module.nms.MinecraftVersion
+import taboolib.platform.util.buildItem
 import kotlin.math.min
 
 /**
@@ -37,7 +37,7 @@ class Texture(
         val itemStack = when (type) {
             TextureType.NORMAL -> parseMaterial(temp)
             TextureType.HEAD -> Heads.getHead(temp)
-            TextureType.RAW -> Items.fromJson(temp)
+            TextureType.RAW -> ItemHelper.fromJson(temp)
         }
 
         if (itemStack != null) {
@@ -74,7 +74,7 @@ class Texture(
                     else "head:${Heads.seekTexture(itemStack)}"
                 }
                 // Model Data
-                if (Version.isAfter(Version.v1_14) && itemMeta != null && itemMeta.hasCustomModelData()) {
+                if (MinecraftVersion.majorLegacy >= 11400 && itemMeta != null && itemMeta.hasCustomModelData()) {
                     return@let "$material{model-data:${itemMeta.customModelData}}"
                 }
                 // Leather
@@ -111,16 +111,9 @@ class Texture(
             val dynamic = texture.containsPlaceholder()
             if (type == TextureType.NORMAL) {
                 if (texture.startsWith("{")) {
-                    val json = try {
-                        Items.fromJson(texture)
-                    } catch (e: Throwable) {
-                        null
-                    }
-                    if (!Items.isNull(json)) {
-                        type = TextureType.RAW
-                        if (!dynamic) static = json!!
-                    }
-                } else if (!dynamic) static = parseMaterial(texture)
+                    type = TextureType.RAW
+                    if (!dynamic) static = ItemHelper.fromJson(texture)!!
+                }
             }
             return Texture(raw, type, texture, dynamic, static, meta)
         }
@@ -129,26 +122,35 @@ class Texture(
             val split = material.split(":", limit = 2)
             val data = split.getOrNull(1)?.toIntOrNull() ?: 0
             val id = split[0].toIntOrNull() ?: split[0].toUpperCase().replace("[ _]".toRegex(), "_")
-            val builder = ItemBuilder(FALL_BACK)
 
-            if (id is Int) {
-                builder.material(id)
-                builder.damage(data)
-            } else {
-                val name = id.toString()
-                try {
-                    builder.material(Material.valueOf(name))
-                } catch (e: Throwable) {
-                    val xMaterial =
-                        XMaterial.values().find { it.name.equals(name, true) }
-                            ?: XMaterial.values()
-                                .find { it -> it.legacy.any { it == name } }
-                            ?: XMaterial.values()
-                                .maxByOrNull { Strings.similarDegree(name, it.name) }
-                    return xMaterial?.parseItem() ?: FALL_BACK
+            return buildItem(XMaterial.matchXMaterial(FALL_BACK)) {
+                var rawMaterial = id
+
+                if (id is Int) {
+                    XMaterial.matchXMaterial(id, 0).let {
+                        if (it.isPresent) {
+                            this.material = it.get()
+                            this.damage = data
+                        } else {
+                            XMaterial.STONE
+                        }
+                    }
+
+                } else {
+                    val name = id.toString()
+                    try {
+                        this.material = XMaterial.valueOf(name)
+                    } catch (e: Throwable) {
+                        val xMaterial =
+                            XMaterial.values().find { it.name.equals(name, true) }
+                                ?: XMaterial.values()
+                                    .find { it -> it.legacy.any { it == name } }
+                                ?: XMaterial.values()
+                                    .maxByOrNull { similarDegree(name, it.name) }
+                        return xMaterial?.parseItem() ?: FALL_BACK
+                    }
                 }
             }
-            return builder.build()
         }
 
 

@@ -1,19 +1,16 @@
 package me.arasple.mc.trhologram.module.listener
 
-import io.izzel.taboolib.module.inject.TListener
 import me.arasple.mc.trhologram.module.display.Hologram
-import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerChangedWorldEvent
+import taboolib.common.platform.event.SubscribeEvent
 
 /**
  * @author Arasple
  * @date 2021/2/12 13:58
  */
-@TListener
-class ListenerWorldChange : Listener {
+object ListenerWorldChange {
 
-    @EventHandler
+    @SubscribeEvent
     fun onChange(e: PlayerChangedWorldEvent) {
         Hologram.destroyAll(e.player)
         Hologram.refreshAll(e.player)

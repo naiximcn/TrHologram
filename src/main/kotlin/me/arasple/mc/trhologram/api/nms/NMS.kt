@@ -1,12 +1,12 @@
 package me.arasple.mc.trhologram.api.nms
 
 import com.mojang.authlib.GameProfile
-import io.izzel.taboolib.kotlin.Reflex
-import io.izzel.taboolib.module.inject.TInject
-import io.izzel.taboolib.module.packet.TPacketHandler
 import me.arasple.mc.trhologram.api.nms.packet.PacketEntity
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
+import taboolib.common.reflect.Reflex.Companion.setProperty
+import taboolib.module.nms.nmsProxy
+import taboolib.module.nms.sendPacket
 
 /**
  * @author Arasple
@@ -16,12 +16,9 @@ abstract class NMS {
 
     companion object {
 
-        /**
-         * @see NMSImpl
-         */
-        @TInject(asm = "me.arasple.mc.trhologram.api.nms.NMSImpl")
-        lateinit var INSTANCE: NMS
-
+        val INSTANCE by lazy {
+            nmsProxy<NMS>()
+        }
     }
 
     abstract fun sendEntityPacket(player: Player, vararg packets: PacketEntity)
@@ -31,10 +28,8 @@ abstract class NMS {
     abstract fun parseVec3d(obj: Any): Vector
 
     fun sendPacket(player: Player, packet: Any, vararg fields: Pair<Any, Any>) {
-        TPacketHandler.sendPacket(player, Reflex.of(packet).let { inst ->
-            fields.forEach { inst.set(it.first.toString(), it.second) }
-            inst.instance
-        })
+        fields.forEach { packet.setProperty(it.first.toString(), it.second) }
+        player.sendPacket(packet)
     }
 
     abstract fun getGameProfile(player: Player): GameProfile

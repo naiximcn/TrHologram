@@ -1,26 +1,25 @@
 package me.arasple.mc.trhologram.module.listener
 
-import io.izzel.taboolib.module.inject.TListener
 import me.arasple.mc.trhologram.api.Settings
 import me.arasple.mc.trhologram.api.event.HologramInteractEvent
-import me.arasple.mc.trhologram.util.Tasks
-import org.bukkit.event.EventHandler
-import org.bukkit.event.EventPriority
-import org.bukkit.event.Listener
+import taboolib.common.platform.event.EventPriority
+import taboolib.common.platform.event.SubscribeEvent
+import taboolib.common.platform.function.submit
 
 /**
  * @author Arasple
  * @date 2021/2/11 16:41
  */
-@TListener
-class ListenerHologramInteract : Listener {
+object ListenerHologramInteract {
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onInteract(e: HologramInteractEvent) {
         val player = e.player
 
         if (Settings.INSTANCE.interactDelay.hasNext(player.name)) {
-            Tasks.delay(1, false) { e.hologram.reactions.eval(player, e.type) }
+            submit(delay = 1L, async = false) {
+                e.hologram.reactions.eval(player, e.type)
+            }
         }
     }
 

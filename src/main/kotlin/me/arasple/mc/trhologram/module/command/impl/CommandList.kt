@@ -1,35 +1,38 @@
 package me.arasple.mc.trhologram.module.command.impl
 
-import io.izzel.taboolib.module.command.base.Argument
-import io.izzel.taboolib.module.command.base.BaseSubCommand
-import io.izzel.taboolib.module.locale.TLocale
 import me.arasple.mc.trhologram.module.display.Hologram
-import org.bukkit.command.Command
-import org.bukkit.command.CommandSender
+import taboolib.common.platform.ProxyCommandSender
+import taboolib.common.platform.command.subCommand
+import taboolib.module.lang.sendLang
 
 /**
  * @author Arasple
  * @date 2021/2/12 17:59
  */
-class CommandList : BaseSubCommand() {
+object CommandList {
 
-    override fun getArguments() = arrayOf(
-        Argument("Filter", false)
-    )
+    val command = subCommand {
+        dynamic(optional = true) {
+            execute<ProxyCommandSender> { sender, _, argument ->
+                commandList(sender, argument)
+            }
+        }
+        execute<ProxyCommandSender> { sender, _, _ ->
+            commandList(sender, null)
+        }
+    }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>) {
-        val filter = if (args.isNotEmpty()) args.joinToString(" ") else null
+    private fun commandList(sender: ProxyCommandSender, filter: String?) {
         val holograms = Hologram.holograms.filter { filter == null || it.id.contains(filter, true) }.sortedBy { it.id }
 
         if (holograms.isEmpty()) {
-            TLocale.sendTo(sender, "Command.List.Error", filter ?: "*")
+            sender.sendLang("Command-List-Error", filter ?: "*")
         } else {
-            TLocale.sendTo(sender, "Command.List.Header", holograms.size, filter ?: "*")
+            sender.sendLang("Command-List-Header", holograms.size, filter ?: "*")
 
             holograms.forEach {
-                TLocale.sendTo(
-                    sender,
-                    "Command.List.Format",
+                sender.sendLang(
+                    "Command-List-Format",
                     it.id,
                     it.components.size
                 )

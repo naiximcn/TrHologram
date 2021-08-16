@@ -1,9 +1,12 @@
 package me.arasple.mc.trhologram.module.service
 
-import io.izzel.taboolib.module.inject.TFunction
-import me.arasple.mc.trhologram.TrHologram
 import me.arasple.mc.trhologram.module.display.Hologram
-import org.bstats.bukkit.Metrics
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.function.pluginVersion
+import taboolib.module.metrics.Metrics
+import taboolib.module.metrics.charts.SingleLineChart
 
 /**
  * @author Arasple
@@ -11,12 +14,12 @@ import org.bstats.bukkit.Metrics
  */
 object Metrics {
 
-    private val B_STATS by lazy { Metrics(TrHologram.plugin, 6387) }
+    private val B_STATS by lazy { Metrics(6387, pluginVersion, Platform.BUKKIT) }
 
-    @TFunction.Init
+    @Awake(LifeCycle.INIT)
     fun initialization() {
         B_STATS.let {
-            it.addCustomChart(Metrics.SingleLineChart("holograms") {
+            it.addCustomChart(SingleLineChart("holograms") {
                 Hologram.holograms.size + Hologram.externalHolograms.size
             })
         }

@@ -1,38 +1,35 @@
 package me.arasple.mc.trhologram.module.command
 
-import io.izzel.taboolib.module.command.base.*
 import me.arasple.mc.trhologram.module.command.impl.*
+import taboolib.common.platform.command.CommandBody
+import taboolib.common.platform.command.CommandHeader
 
 /**
  * @author Arasple
  * @date 2021/2/11 16:46
  */
-@BaseCommand(name = "trhologram", aliases = ["hologram", "trhd", "hd"], permission = "trhologram.access")
-class CommandHandler : BaseMainCommand() {
+@CommandHeader(name = "trhologram", aliases = ["hologram", "trhd", "hd"], permission = "trhologram.access")
+object CommandHandler {
 
-    @SubCommand(permission = "trhologram.command.list", description = "List loaded holograms")
-    val list: BaseSubCommand = CommandList()
+    @CommandBody(permission = "trhologram.command.list")
+    val list = CommandList.command
 
-    @SubCommand(permission = "trhologram.command.teleport", description = "Teleport to the hologram's location")
-    val teleport: BaseSubCommand = CommandTeleport()
+    @CommandBody(permission = "trhologram.command.teleport")
+    val teleport = CommandTeleport.command
 
-    @SubCommand(permission = "trhologram.command.movehere", description = "Teleport hologram to your location")
-    val movehere: BaseSubCommand = CommandMovehere()
+    @CommandBody(permission = "trhologram.command.movehere")
+    val movehere = CommandMovehere.command
 
-    @SubCommand(
-        permission = "trhologram.command.create",
-        description = "Create a new hologram",
-        type = CommandType.PLAYER
-    )
-    val create: BaseSubCommand = CommandCreate()
+    @CommandBody(permission = "trhologram.command.create")
+    val create = CommandCreate
 
-    @SubCommand(description = "Delete an existed hologram", type = CommandType.PLAYER)
-    val delete: BaseSubCommand = CommandDelete()
+    @CommandBody(permission = "trhologram.command.delete")
+    val delete = CommandDelete.command
 
-    @SubCommand(permission = "trhologram.command.reload", description = "Reload holograms")
-    val reload: BaseSubCommand = CommandReload()
+    @CommandBody(permission = "trhologram.command.reload")
+    val reload = CommandReload.command
 
-    @SubCommand(permission = "trhologram.command.mirror", description = "Monitor performance")
-    val mirror: BaseSubCommand = CommandMirror()
+    @CommandBody(permission = "trhologram.command.mirror")
+    val mirror = CommandMirror.command
 
 }

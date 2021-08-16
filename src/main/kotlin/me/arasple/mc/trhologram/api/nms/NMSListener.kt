@@ -1,12 +1,12 @@
 package me.arasple.mc.trhologram.api.nms
 
-import io.izzel.taboolib.module.packet.Packet
-import io.izzel.taboolib.module.packet.TPacket
 import me.arasple.mc.trhologram.api.event.HologramInteractEvent
 import me.arasple.mc.trhologram.api.event.HologramInteractEvent.Type.*
 import me.arasple.mc.trhologram.module.display.Hologram
 import me.arasple.mc.trhologram.module.service.Performance
-import org.bukkit.entity.Player
+import taboolib.common.platform.event.SubscribeEvent
+import taboolib.module.nms.MinecraftVersion
+import taboolib.module.nms.PacketReceiveEvent
 
 /**
  * @author Arasple
@@ -14,24 +14,36 @@ import org.bukkit.entity.Player
  */
 object NMSListener {
 
-    @TPacket(type = TPacket.Type.RECEIVE)
-    fun useEntity(player: Player, packet: Packet): Boolean {
-        if (packet.`is`("PacketPlayInUseEntity")) {
-            Performance.MIRROR.check("Hologram:Event:Interact") {
-                val entityId = packet.read("a", -1).also { if (it < 1197897763) return true }
-                val hologram =
-                    Hologram.findHologram { it -> it.components.any { it.entityId == entityId } } ?: return true
-
-                val sneaking = player.isSneaking
-                val type = when (packet.read("action").toString()) {
-                    "ATTACK" -> if (sneaking) SHIFT_LEFT else LEFT
-                    else -> if (sneaking) SHIFT_RIGHT else RIGHT
+    @SubscribeEvent
+    fun e(e: PacketReceiveEvent) {
+        if (e.packet.name == "PacketPlayInUseEntity") {
+            Performance.check("Hologram:Event:Interact") {
+                val entityId = e.packet.read<Int>("a").also {
+                    if (it == null || it < 1197897763) {
+                        return
+                    }
                 }
+                val hologram =
+                    Hologram.findHologram { it -> it.components.any { it.entityId == entityId } } ?: return
 
-                HologramInteractEvent(player, type, hologram).call()
+                val sneaking = e.player.isSneaking
+                if (MinecraftVersion.isUniversal) {
+                    val action = e.packet.read<Any>("action")!!
+                    when (action.javaClass.simpleName) {
+                        // ATTACK
+                        "d" -> if (sneaking) SHIFT_LEFT else LEFT
+                        else -> if (sneaking) SHIFT_RIGHT else RIGHT
+                    }
+                } else {
+                    val type = when (e.packet.read<Any>("action").toString()) {
+                        "ATTACK" -> if (sneaking) SHIFT_LEFT else LEFT
+                        else -> if (sneaking) SHIFT_RIGHT else RIGHT
+                    }
+
+                    HologramInteractEvent(e.player, type, hologram).call()
+                }
             }
         }
-        return true
     }
 
 }

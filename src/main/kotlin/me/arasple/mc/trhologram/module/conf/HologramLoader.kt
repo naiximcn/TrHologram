@@ -1,7 +1,5 @@
 package me.arasple.mc.trhologram.module.conf
 
-import io.izzel.taboolib.module.locale.TLocale
-import io.izzel.taboolib.util.Files
 import me.arasple.mc.trhologram.TrHologram
 import me.arasple.mc.trhologram.api.Position
 import me.arasple.mc.trhologram.api.Settings
@@ -22,6 +20,9 @@ import me.arasple.mc.trhologram.util.parseString
 import org.bukkit.Location
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
+import taboolib.common.io.newFile
+import taboolib.common.platform.function.console
+import taboolib.module.lang.sendLang
 import java.io.File
 import java.nio.charset.StandardCharsets
 import kotlin.system.measureNanoTime
@@ -32,7 +33,7 @@ import kotlin.system.measureNanoTime
  */
 object HologramLoader {
 
-    private val folder = Files.folder(TrHologram.plugin.dataFolder, "holograms")
+    private val folder = newFile(TrHologram.plugin.dataFolder, "holograms")
 
     fun create(id: String, location: Location): Hologram {
         val hologram =
@@ -49,7 +50,7 @@ object HologramLoader {
               All: 'tell color *"&bHi, you just clicked this hologram"'
             """.trimIndent()
 
-        Files.file(folder, "$id.yml").also {
+        newFile(folder, "$id.yml").also {
             it.writeText(hologram, StandardCharsets.UTF_8)
             return load(it)
         }
@@ -57,7 +58,7 @@ object HologramLoader {
 
     fun load(sender: CommandSender) {
         measureNanoTime { load() }.div(1000000.0).let {
-            TLocale.sendTo(sender, "Hologram.Loaded", Hologram.holograms.size, it)
+            console().sendLang("Hologram.Loaded", Hologram.holograms.size, it)
         }
     }
 

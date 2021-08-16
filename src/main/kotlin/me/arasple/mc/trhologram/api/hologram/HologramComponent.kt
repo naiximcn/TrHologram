@@ -1,14 +1,13 @@
 package me.arasple.mc.trhologram.api.hologram
 
-import io.izzel.taboolib.kotlin.Tasks
 import me.arasple.mc.trhologram.api.Position
 import me.arasple.mc.trhologram.api.TrHologramAPI
 import me.arasple.mc.trhologram.api.base.TickEvent
 import me.arasple.mc.trhologram.api.nms.packet.PacketEntityDestroy
-import me.arasple.mc.trhologram.util.Tasks.shut
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitTask
+import taboolib.common.platform.function.submit
+import taboolib.common.platform.service.PlatformExecutor
 import kotlin.properties.Delegates
 
 /**
@@ -29,9 +28,9 @@ abstract class HologramComponent(
 
     internal val viewers = mutableSetOf<String>()
 
-    private var task: BukkitTask? = null
+    private var task: PlatformExecutor.PlatformTask? = null
 
-    var period by Delegates.observable(tick) { _, _, _ ->
+    var period0 by Delegates.observable(tick) { _, _, _ ->
         deployment()
     }
 
@@ -40,14 +39,14 @@ abstract class HologramComponent(
     }
 
     private fun deployment() {
-        task.shut()
-        if (period > 0) task = Tasks.timer(period, period, true) {
+        task?.cancel()
+        if (period0 > 0) task = submit(delay = period0, period = period0, async = true) {
             viewers.removeIf {
                 val player = Bukkit.getPlayerExact(it)
                 player == null || !player.isOnline
             }
             onTick()
-            onTick?.run(this)
+            onTick?.run(this@HologramComponent)
         }
     }
 
@@ -57,7 +56,7 @@ abstract class HologramComponent(
     }
 
     fun destroy() {
-        task.shut()
+        task?.cancel()
         forViewers { destroy(it) }
     }
 

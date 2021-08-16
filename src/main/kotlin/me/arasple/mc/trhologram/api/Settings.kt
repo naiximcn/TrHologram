@@ -1,8 +1,9 @@
 package me.arasple.mc.trhologram.api
 
-import io.izzel.taboolib.module.config.TConfig
-import io.izzel.taboolib.module.inject.TInject
-import io.izzel.taboolib.util.Baffle
+import taboolib.common5.Baffle
+import taboolib.common5.FileWatcher
+import taboolib.module.configuration.Config
+import taboolib.module.configuration.SecuredFile
 import java.util.concurrent.TimeUnit
 
 /**
@@ -13,14 +14,17 @@ class Settings {
 
     companion object {
 
-        @TInject("settings.yml", locale = "Options.Language", migrate = true)
-        lateinit var CONF: TConfig
+        @Config("settings.yml", migrate = true)
+        lateinit var CONF: SecuredFile
             private set
 
         internal var INSTANCE = Settings()
 
         fun init() {
-            CONF.listener { onSettingsReload() }.also { onSettingsReload() }
+//            CONF.listener { onSettingsReload() }.also { onSettingsReload() }
+            FileWatcher.INSTANCE.addSimpleListener(CONF.file) {
+                onSettingsReload()
+            }
         }
 
         fun onSettingsReload() {

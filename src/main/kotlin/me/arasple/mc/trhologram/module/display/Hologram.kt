@@ -1,6 +1,5 @@
 package me.arasple.mc.trhologram.module.display
 
-import io.izzel.taboolib.kotlin.Tasks
 import me.arasple.mc.trhologram.api.Position
 import me.arasple.mc.trhologram.api.TrHologramAPI
 import me.arasple.mc.trhologram.api.base.BaseCondition
@@ -10,10 +9,10 @@ import me.arasple.mc.trhologram.api.hologram.HologramComponent
 import me.arasple.mc.trhologram.api.hologram.ItemHologram
 import me.arasple.mc.trhologram.api.hologram.TextHologram
 import me.arasple.mc.trhologram.module.service.Performance
-import me.arasple.mc.trhologram.util.Tasks.shut
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.bukkit.scheduler.BukkitTask
+import taboolib.common.platform.function.submit
+import taboolib.common.platform.service.PlatformExecutor
 
 /**
  * @author Arasple
@@ -40,7 +39,7 @@ class Hologram(
         }
 
         fun refreshAll(player: Player) {
-            Performance.MIRROR.check("Hologram:Event:Refresh") {
+            Performance.check("Hologram:Event:Refresh") {
                 externalHolograms.filter { it.sameWorld(player) }.forEach {
                     it.refreshVisibility(player)
                 }
@@ -67,15 +66,15 @@ class Hologram(
 
     private val visibleByCondition = mutableMapOf<String, Boolean>()
     private val viewers = mutableSetOf<String>()
-    private var refreshTask: BukkitTask? = null
+    private var refreshTask: PlatformExecutor.PlatformTask? = null
 
     init {
         deployment()
     }
 
     private fun deployment() {
-        refreshTask.shut()
-        if (refreshCondition > 0) refreshTask = Tasks.timer(refreshCondition, refreshCondition, true) {
+        refreshTask?.cancel()
+        if (refreshCondition > 0) refreshTask = submit(delay = refreshCondition, period = refreshCondition, async = true) {
             viewers.removeIf {
                 val player = Bukkit.getPlayerExact(it)
                 player == null || !player.isOnline
@@ -142,7 +141,7 @@ class Hologram(
     }
 
     fun destroy() {
-        refreshTask.shut()
+        refreshTask?.cancel()
         components.forEach(HologramComponent::destroy)
         externalHolograms.remove(this)
     }
@@ -161,8 +160,8 @@ class Hologram(
             viewCondition?.let { viewCondition(it) }
             components.forEach {
                 when (it) {
-                    is TextHologram -> append(it.text, it.period, onTick = it.onTick)
-                    is ItemHologram -> append(it.display, it.period, onTick = it.onTick)
+                    is TextHologram -> append(it.text, it.period0, onTick = it.onTick)
+                    is ItemHologram -> append(it.display, it.period0, onTick = it.onTick)
                 }
             }
 

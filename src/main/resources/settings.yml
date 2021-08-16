@@ -1,6 +1,3 @@
-Options:
-  Language: en_US
-
 Loader:
   Hologram-Files:
     - 'plugins/CustomHologramsFolder'

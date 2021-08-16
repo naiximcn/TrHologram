@@ -1,12 +1,13 @@
 package me.arasple.mc.trhologram.util
 
-import io.izzel.taboolib.kotlin.kether.KetherFunction
-import io.izzel.taboolib.module.locale.TLocale
-import io.izzel.taboolib.module.locale.chatcolor.TColor
-import io.izzel.taboolib.util.Coerce
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import taboolib.common.platform.function.adaptPlayer
+import taboolib.common5.Coerce
+import taboolib.module.chat.colored
+import taboolib.module.kether.KetherFunction
+import taboolib.platform.compat.replacePlaceholder
 
 /**
  * @author Arasple
@@ -35,5 +36,5 @@ fun Location.parseString(): String {
 }
 
 fun Player.parseString(string: String): String {
-    return TColor.translate(TLocale.Translate.setPlaceholders(this, KetherFunction.parse(string) { sender = player }))
+    return KetherFunction.parse(string) { sender = adaptPlayer(this) }.colored().replacePlaceholder(this)
 }

@@ -1,7 +1,7 @@
 package me.arasple.mc.trhologram.module.service
 
-import io.izzel.taboolib.kotlin.Mirror
-import me.arasple.mc.trmenu.module.internal.service.Performance
+import taboolib.common.platform.ProxyCommandSender
+import taboolib.common5.Mirror
 
 /**
  * @author Arasple
@@ -9,15 +9,15 @@ import me.arasple.mc.trmenu.module.internal.service.Performance
  */
 object Performance {
 
-    fun collect(opt: Mirror.Options.() -> Unit = {}): Mirror.MirrorCollect {
-        return MIRROR.collect(opt)
+    fun collect(sender: ProxyCommandSender, opt: Mirror.MirrorSettings.() -> Unit = {}): Mirror.MirrorCollect {
+        return Mirror.report(sender, opt)
     }
 
     @Suppress("DEPRECATION")
     inline fun check(id: String, func: () -> Unit) {
-        Performance.MIRROR.check(id, func)
+        Mirror.mirrorData.computeIfAbsent(id) { Mirror.MirrorData() }.define()
+        func()
+        Mirror.mirrorData[id]?.finish()
     }
-
-    val MIRROR = Mirror()
 
 }

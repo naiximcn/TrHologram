@@ -1,9 +1,9 @@
 package me.arasple.mc.trhologram.module.condition
 
-import io.izzel.taboolib.util.Coerce
 import me.arasple.mc.trhologram.api.TrHologramAPI
 import me.arasple.mc.trhologram.api.base.BaseCondition
 import org.bukkit.entity.Player
+import taboolib.common5.Coerce
 import java.util.concurrent.CompletableFuture
 
 /**

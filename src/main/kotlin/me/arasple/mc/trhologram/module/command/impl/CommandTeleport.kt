@@ -1,35 +1,37 @@
 package me.arasple.mc.trhologram.module.command.impl
 
-import io.izzel.taboolib.module.command.base.Argument
-import io.izzel.taboolib.module.command.base.BaseSubCommand
-import io.izzel.taboolib.module.locale.TLocale
 import me.arasple.mc.trhologram.module.display.Hologram
-import org.bukkit.command.Command
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import taboolib.common.platform.ProxyCommandSender
+import taboolib.common.platform.command.subCommand
+import taboolib.platform.util.sendLang
 
 /**
  * @author Arasple
  * @date 2021/2/13 10:43
  */
-class CommandTeleport : BaseSubCommand() {
+object CommandTeleport {
 
-    override fun getArguments() = arrayOf(
-        Argument("Id", true) {
-            Hologram.holograms.map { it.id }
+    val command = subCommand {
+        dynamic {
+            suggestion<ProxyCommandSender> { _, _ ->
+                Hologram.holograms.map { it.id }
+            }
+            execute<Player> { sender, _, argument ->
+                val args = argument.split(" ")
+            }
         }
-    )
+    }
 
-    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>) {
-        val hologram = Hologram.findHologram { it.id.equals(args[0], true) }
-        val player = sender as Player
+    private fun commandTeleport(sender: Player, name: String) {
+        val hologram = Hologram.findHologram { it.id.equals(name, true) }
 
         if (hologram == null) {
-            TLocale.sendTo(sender, "Command.Not-Exists", args[0])
+            sender.sendLang("Command-Not-Exists", name)
             return
         }
 
-        player.teleport(hologram.position.toLocation())
+        sender.teleport(hologram.position.toLocation())
     }
 
 }

@@ -7,9 +7,10 @@ import me.arasple.mc.trhologram.api.base.TickEvent
 import me.arasple.mc.trhologram.api.nms.packet.*
 import me.arasple.mc.trhologram.module.display.texture.Texture
 import me.arasple.mc.trhologram.module.service.Performance
-import me.arasple.mc.trhologram.util.Tasks
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import taboolib.common.platform.function.submit
 
 /**
  * @author Arasple
@@ -57,16 +58,18 @@ class ItemHologram(
         PacketEntitySpawn(entityId, position, false).send(player)
         updateItem(player)
 
-        Tasks.delay {
+        submit(delay = 1L, async = !Bukkit.isPrimaryThread()) {
             PacketEntityMount(teid, IntArray(1) { entityId }).send(player)
-            Tasks.delay(20 * 5) { PacketEntityDestroy(teid).send(player) }
+            submit(delay = 20 * 5, async = !Bukkit.isPrimaryThread()) {
+                PacketEntityDestroy(teid).send(player)
+            }
         }
 
         viewers.add(player.name)
     }
 
     override fun onTick() {
-        Performance.MIRROR.check("Hologram:Event:Tick:ItemComponent") {
+        Performance.check("Hologram:Event:Tick:ItemComponent") {
             forViewers { updateItem(it) }
         }
     }

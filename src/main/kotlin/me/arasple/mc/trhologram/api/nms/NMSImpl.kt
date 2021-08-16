@@ -2,11 +2,9 @@ package me.arasple.mc.trhologram.api.nms
 
 import com.mojang.authlib.GameProfile
 import com.mojang.datafixers.util.Pair
-import io.izzel.taboolib.Version
-import io.izzel.taboolib.module.lite.SimpleEquip
-import io.izzel.taboolib.util.item.Equipments
-import io.izzel.taboolib.util.item.Items
 import me.arasple.mc.trhologram.api.nms.packet.*
+import me.arasple.mc.trhologram.util.Equipments
+import me.arasple.mc.trhologram.util.ItemHelper
 import net.minecraft.server.v1_16_R1.*
 import net.minecraft.server.v1_16_R3.ChatComponentText
 import net.minecraft.server.v1_16_R3.EntityTypes
@@ -19,6 +17,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Vector
+import taboolib.module.nms.MinecraftVersion
 import java.util.*
 
 /**
@@ -27,7 +26,7 @@ import java.util.*
  */
 class NMSImpl : NMS() {
 
-    private val version = Version.getCurrentVersionInt()
+    private val version = MinecraftVersion.majorLegacy
     private val emptyItemStack = CraftItemStack.asNMSCopy((ItemStack(Material.AIR)))
     private val indexs = arrayOf(
         // armorstand
@@ -89,7 +88,7 @@ class NMSImpl : NMS() {
                 // Modify Item
                 is PacketItemModify -> {
                     var entity = 0
-                    val itemNull = Items.isNull(it.itemStack)
+                    val itemNull = ItemHelper.isNull(it.itemStack)
                     if (it.isInvisible || itemNull) entity += 0x80.toByte()
                     if (it.isGlowing) entity += 0x40.toByte()
 
@@ -144,7 +143,7 @@ class NMSImpl : NMS() {
                         entityId,
                         listOf(
                             Pair(
-                                EnumItemSlot.fromName(SimpleEquip.fromBukkit(slot).nms),
+                                EnumItemSlot.fromName(Equipments.fromBukkit(slot)?.nms),
                                 org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack.asNMSCopy(itemStack)
                             )
                         )
