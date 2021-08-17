@@ -27,8 +27,7 @@ Command-List-Format:
   - type: JSON
     text: '&8- [&3{0}] &7| &8(Lines: {1})&r'
     args:
-      - hd:
-        hover: '&7Кликните, чтобы переместить'
+      - hover: '&7Кликните, чтобы переместить'
         command: '/trhologram teleport {0}'
 Command-Not-Exists: '&8[&2Tr&aHologram&8] &7NORM &8| &7Голограмма &f{0} не существует.'
 Command-Deleted: '&8[&2Tr&aHologram&8] &aNORM &8| &3Удалена голограмма с именем &3{0}&3.'

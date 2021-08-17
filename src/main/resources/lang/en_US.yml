@@ -27,8 +27,7 @@ Command-List-Format:
   - type: JSON
     text: '&8- [&3{0}] &7| &8(Lines: {1})&r'
     args:
-      - hd:
-        hover: '&7Click to teleport'
+      - hover: '&7Click to teleport'
         command: '/trhologram teleport {0}'
 Command-Not-Exists: '&8[&2Tr&aHologram&8] &7NORM &8| &7Hologram &f{0} does not exist.'
 Command-Deleted: '&8[&2Tr&aHologram&8] &aNORM &8| &3Deleted hologram named &3{0}&3.'

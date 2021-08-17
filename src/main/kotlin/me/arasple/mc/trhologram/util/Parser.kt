@@ -36,5 +36,5 @@ fun Location.parseString(): String {
 }
 
 fun Player.parseString(string: String): String {
-    return KetherFunction.parse(string) { sender = adaptPlayer(this) }.colored().replacePlaceholder(this)
+    return KetherFunction.parse(string) { sender = adaptPlayer(this@parseString) }.colored().replacePlaceholder(this)
 }

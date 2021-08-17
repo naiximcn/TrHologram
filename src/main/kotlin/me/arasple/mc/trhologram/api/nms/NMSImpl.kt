@@ -17,6 +17,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Vector
+import taboolib.common.reflect.Reflex.Companion.unsafeInstance
 import taboolib.module.nms.MinecraftVersion
 import java.util.*
 
@@ -47,18 +48,34 @@ class NMSImpl : NMS() {
                 is PacketEntityDestroy -> sendPacket(player, PacketPlayOutEntityDestroy(id))
                 // Spawn Armor Stand
                 is PacketEntitySpawn -> {
-                    sendPacket(
-                        player,
-                        PacketPlayOutSpawnEntity(),
-                        "a" to id,
-                        "b" to (it.uuid ?: UUID.randomUUID()),
-                        "c" to it.position.x,
-                        "d" to it.position.y,
-                        "e" to it.position.z,
-                        "f" to 0.toByte(),
-                        "g" to 0.toByte(),
-                        "k" to if (it.type) if (version >= 11400) EntityTypes.ARMOR_STAND else 78 else if (version >= 11400) EntityTypes.ITEM else 2
-                    )
+                    if (MinecraftVersion.isUniversal) {
+                        sendPacket(
+                            player,
+                            PacketPlayOutSpawnEntity::class.java.unsafeInstance(),
+                            "id" to id,
+                            "uuid" to (it.uuid ?: UUID.randomUUID()),
+                            "x" to it.position.x,
+                            "y" to it.position.y,
+                            "z" to it.position.z,
+                            "xa" to 0,
+                            "ya" to 0,
+                            "za" to 0,
+                            "type" to if (it.type) if (version >= 11400) EntityTypes.ARMOR_STAND else 78 else if (version >= 11400) EntityTypes.ITEM else 2
+                        )
+                    } else {
+                        sendPacket(
+                            player,
+                            PacketPlayOutSpawnEntity(),
+                            "a" to id,
+                            "b" to (it.uuid ?: UUID.randomUUID()),
+                            "c" to it.position.x,
+                            "d" to it.position.y,
+                            "e" to it.position.z,
+                            "f" to 0.toByte(),
+                            "g" to 0.toByte(),
+                            "k" to if (it.type) if (version >= 11400) EntityTypes.ARMOR_STAND else 78 else if (version >= 11400) EntityTypes.ITEM else 2
+                        )
+                    }
                     // Cancel graivity
                     sendEntityMetadata(
                         player,
@@ -67,7 +84,11 @@ class NMSImpl : NMS() {
                     )
                 }
                 is PacketEntityMount -> {
-                    sendPacket(player, PacketPlayOutMount(), "a" to it.entityId, "b" to it.mount)
+                    if (MinecraftVersion.isUniversal) {
+                        sendPacket(player, PacketPlayOutMount::class.java.unsafeInstance(), "vehicle" to it.entityId, "passengers" to it.mount)
+                    } else {
+                        sendPacket(player, PacketPlayOutMount(), "a" to it.entityId, "b" to it.mount)
+                    }
                 }
                 // Packet Modify
                 is PacketArmorStandModify -> {
@@ -113,12 +134,21 @@ class NMSImpl : NMS() {
      * 更新实体属性 Metadata
      */
     override fun sendEntityMetadata(player: Player, entityId: Int, vararg objects: Any) {
-        sendPacket(
-            player,
-            PacketPlayOutEntityMetadata(),
-            "a" to entityId,
-            "b" to objects.map { it as DataWatcher.Item<*> }.toList()
-        )
+        if (MinecraftVersion.isUniversal) {
+            sendPacket(
+                player,
+                PacketPlayOutEntityMetadata::class.java.unsafeInstance(),
+                "id" to entityId,
+                "packedItems" to objects.map { it as DataWatcher.Item<*> }.toList()
+            )
+        } else {
+            sendPacket(
+                player,
+                PacketPlayOutEntityMetadata(),
+                "a" to entityId,
+                "b" to objects.map { it as DataWatcher.Item<*> }.toList()
+            )
+        }
     }
 
     override fun parseVec3d(obj: Any): Vector {

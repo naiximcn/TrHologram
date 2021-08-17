@@ -27,8 +27,7 @@ Command-List-Format:
   - type: JSON
     text: '&8- [&3{0}] &7| &8(Lines: {1})&r'
     args:
-      - hd:
-        hover: '&7点击传送'
+      - hover: '&7点击传送'
         command: '/trhologram teleport {0}'
 Command-Not-Exists: '&8[&2Tr&aHologram&8] &7NORM &8| &7指定的全息 &f{0} 不存在.'
 Command-Deleted: '&8[&2Tr&aHologram&8] &aNORM &8| &3已删除名为 &3{0} &3的全息.'
