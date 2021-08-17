@@ -15,7 +15,7 @@ object CommandCreate {
 
     val command = subCommand {
         dynamic {
-            suggestion<ProxyCommandSender> { _, _ ->
+            suggestion<Player> { _, _ ->
                 Hologram.holograms.map { it.id }
             }
 

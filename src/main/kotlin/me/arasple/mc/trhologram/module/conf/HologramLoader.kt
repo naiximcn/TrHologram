@@ -22,6 +22,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
 import taboolib.common.io.newFile
 import taboolib.common.platform.function.console
+import taboolib.common.platform.function.releaseResourceFile
 import taboolib.module.lang.sendLang
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -33,7 +34,16 @@ import kotlin.system.measureNanoTime
  */
 object HologramLoader {
 
-    private val folder = newFile(TrHologram.plugin.dataFolder, "holograms")
+    private val folder by lazy {
+        Hologram.clear()
+        val folder = File(TrHologram.plugin.dataFolder, "holograms")
+
+        if (!folder.exists()) {
+            releaseResourceFile("holograms/Demo.yml", true)
+        }
+
+        folder
+    }
 
     fun create(id: String, location: Location): Hologram {
         val hologram =
@@ -58,7 +68,7 @@ object HologramLoader {
 
     fun load(sender: CommandSender) {
         measureNanoTime { load() }.div(1000000.0).let {
-            console().sendLang("Hologram.Loaded", Hologram.holograms.size, it)
+            console().sendLang("Hologram-Loaded", Hologram.holograms.size, it)
         }
     }
 

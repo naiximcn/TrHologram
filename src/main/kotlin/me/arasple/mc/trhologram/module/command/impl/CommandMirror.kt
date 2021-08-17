@@ -13,10 +13,8 @@ import taboolib.common.platform.function.submit
 object CommandMirror {
 
     val command = subCommand {
-        dynamic {
-            execute<ProxyCommandSender> { sender, _, _ ->
-                commandMirror(sender)
-            }
+        execute<ProxyCommandSender> { sender, _, _ ->
+            commandMirror(sender)
         }
     }
 

@@ -25,7 +25,7 @@ object TrHologram : Plugin() {
     }
 
     override fun onEnable() {
-        if (MinecraftVersion.majorLegacy >= 10900) {
+        if (MinecraftVersion.majorLegacy <= 10900) {
             console().sendLang("Plugin-UnsupportedVersion", pluginVersion)
             disablePlugin()
             return

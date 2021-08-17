@@ -19,13 +19,13 @@ Paster-Failed: '&8[&2Tr&aHologram&8] &cПроизошла ошибка при в
 
 Command-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3Голограммы перезагрузились. &a{0}'
 Command-List-Error: '&8[&2Tr&aHologram&8] &7NORM &8| &7Голограм не нашлось 0_0 &8(Filter: {0})'
-Command-ListHeader:
+Command-List-Header:
   - ''
   - '&8[&2Tr&aHologram&8] &aFINE &8| &7Загружено &f{0} &7голограмм &8(Filter: {1}): '
   - ''
 Command-List-Format:
   - type: JSON
-    text: '&8- <&3{0}@hd> &7| &8(Lines: {1})&r'
+    text: '&8- [&3{0}] &7| &8(Lines: {1})&r'
     args:
       - hd:
         hover: '&7Кликните, чтобы переместить'

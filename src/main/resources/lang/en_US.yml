@@ -25,7 +25,7 @@ Command-List-Header:
   - ''
 Command-List-Format:
   - type: JSON
-    text: '&8- <&3{0}@hd> &7| &8(Lines: {1})&r'
+    text: '&8- [&3{0}] &7| &8(Lines: {1})&r'
     args:
       - hd:
         hover: '&7Click to teleport'

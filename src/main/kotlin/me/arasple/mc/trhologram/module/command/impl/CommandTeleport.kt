@@ -14,11 +14,12 @@ object CommandTeleport {
 
     val command = subCommand {
         dynamic {
-            suggestion<ProxyCommandSender> { _, _ ->
+            suggestion<Player> { _, _ ->
                 Hologram.holograms.map { it.id }
             }
             execute<Player> { sender, _, argument ->
                 val args = argument.split(" ")
+                commandTeleport(sender, args[0])
             }
         }
     }

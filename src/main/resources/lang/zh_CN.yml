@@ -1,0 +1,46 @@
+Plugin-UnsupportedVersion: '&8[&2Tr&aHologram&8] &cERROR &8| &c插件不支持当前服务器版本'
+Plugin-Loading:
+  - ''
+  - '&7正在加载 &2Tr&aHologram... &8{0}'
+  - ''
+Plugin-Enabled: '&8[&2Tr&aHologram&8] &bINFO &8| &3插件启用. 当前运行版本 &2{0}&7.'
+Plugin-Update:
+  - '&8[&2Tr&aHologram&8] &bUPDATE &8| &3更新 &a{0}&3 找到, 通过下方链接下载!'
+  - '&bhttps://www.spigotmc.org/resources/75503/'
+Plugin-Dependency-Hooked: '&8[&2Tr&aHologram&8] &6HOOK &8| &7软依赖 &f{0} &7已兼容.'
+Plugin-Dependency-Abuse: '&8[&2Tr&aHologram&8] &6HOOK &8| &4试图使用未挂钩插件 &c{0}'
+
+Hologram-Loaded: '&8[&2Tr&aHologram&8] &aFINE &8| &a{0} &3个全息已加载 &8({1} ms)'
+
+Paster-Processing: '&8[&2Tr&aHologram&8] &7正在粘贴内容 ...'
+Paster-Success: '&8[&2Tr&aHologram&8] &3内容已被粘贴到 &a{0}'
+Paster-Failed: '&8[&2Tr&aHologram&8] &c粘贴内容时发现错误. 请检查控制台.'
+
+Command-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3成功重载全息 &a{0}'
+Command-List:
+Command-List-Error: '&8[&2Tr&aHologram&8] &7NORM &8| &7没有发现全息... &8(Filter: {0})'
+Command-List-Header:
+  - ''
+  - '&8[&2Tr&aHologram&8] &aFINE &8| &7已加载 &f{0} &7个全息 &8(Filter: {1}): '
+  - ''
+Command-List-Format:
+  - type: JSON
+    text: '&8- [&3{0}] &7| &8(Lines: {1})&r'
+    args:
+      - hd:
+        hover: '&7点击传送'
+        command: '/trhologram teleport {0}'
+Command-Not-Exists: '&8[&2Tr&aHologram&8] &7NORM &8| &7指定的全息 &f{0} 不存在.'
+Command-Deleted: '&8[&2Tr&aHologram&8] &aNORM &8| &3已删除名为 &3{0} &3的全息.'
+Command-Existed:
+  - type: TITLE
+    title: '&c&l操作失败'
+    subtitle: '&7&l重复的全息 ID'
+  - type: SOUND
+    sound: ITEM_SHIELD_BREAK-1-2
+Command-Created:
+  - type: TITLE
+    title: '&a&l已创建'
+    subtitle: '&a&l快来修改吧 :)'
+  - type: SOUND
+    sound: ITEM_BOTTLE_FILL-1-2
