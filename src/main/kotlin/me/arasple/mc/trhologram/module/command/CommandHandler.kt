@@ -21,7 +21,7 @@ object CommandHandler {
     val movehere = CommandMovehere.command
 
     @CommandBody(permission = "trhologram.command.create")
-    val create = CommandCreate
+    val create = CommandCreate.command
 
     @CommandBody(permission = "trhologram.command.delete")
     val delete = CommandDelete.command
