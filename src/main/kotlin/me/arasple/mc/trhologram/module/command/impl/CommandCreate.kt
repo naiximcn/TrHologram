@@ -18,7 +18,6 @@ object CommandCreate {
             suggestion<Player> { _, _ ->
                 Hologram.holograms.map { it.id }
             }
-
             execute<Player> { sender, _, argument ->
                 val args = argument.split(" ")
                 commandCreate(sender, args[0])

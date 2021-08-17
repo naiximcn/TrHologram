@@ -18,10 +18,9 @@ object CommandDelete {
 
     val command = subCommand {
         dynamic {
-            suggestion<Player> { _, _ ->
+            suggestion<Player>(uncheck = true) { _, _ ->
                 Hologram.holograms.map { it.id }
             }
-
             execute<Player> { sender, _, argument ->
                 val args = argument.split(" ")
                 commandDelete(sender, args[0])
