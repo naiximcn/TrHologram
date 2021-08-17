@@ -36,10 +36,14 @@ Command-Existed:
     title: '&c&l操作失败'
     subtitle: '&7&l重复的全息 ID'
   - type: SOUND
-    sound: ITEM_SHIELD_BREAK-1-2
+    sound: ITEM_SHIELD_BREAK
+    volume: 1
+    pitch: 2
 Command-Created:
   - type: TITLE
     title: '&a&l已创建'
     subtitle: '&a&l快来修改吧 :)'
   - type: SOUND
-    sound: ITEM_BOTTLE_FILL-1-2
+    sound: ITEM_BOTTLE_FILL
+    volume: 1
+    pitch: 2

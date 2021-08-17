@@ -15,7 +15,7 @@ object CommandCreate {
 
     val command = subCommand {
         dynamic {
-            suggestion<Player> { _, _ ->
+            suggestion<Player>(uncheck = true) { _, _ ->
                 Hologram.holograms.map { it.id }
             }
             execute<Player> { sender, _, argument ->

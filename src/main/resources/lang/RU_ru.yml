@@ -36,10 +36,14 @@ Command-Existed:
     title: '&c&lОПЕРАЦИЯ ОТМЕНЕНА'
     subtitle: '&7&lДублирование ID голограммы'
   - type: SOUND
-    sound: ITEM_SHIELD_BREAK-1-2
+    sound: ITEM_SHIELD_BREAK
+    volume: 1
+    pitch: 2
 Command-Created:
   - type: TITLE
     title: '&a&lГОТОВО'
     subtitle: '&a&lТеперь настройте голограмму'
   - type: SOUND
-    sound: ITEM_BOTTLE_FILL-1-2
+    sound: ITEM_BOTTLE_FILL
+    volume: 1
+    pitch: 2
