@@ -38,7 +38,8 @@ taboolib {
 repositories {
     mavenCentral()
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://repo.codemc.org/repository/maven-public")
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://repo.mcage.cn/repository/maven-releases/")
 }
 
 dependencies {
@@ -49,5 +50,6 @@ dependencies {
     compileOnly("ink.ptms.core:v11200:11200:all")
     compileOnly("ink.ptms.core:v10900:10900:all")
     compileOnly("me.clip:placeholderapi:2.10.9")
+    compileOnly("me.arasple:TrMenu:3.0-PRE-18:pure")
     compileOnly(fileTree("libs"))
 }
