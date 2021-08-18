@@ -14,6 +14,7 @@ class TrMenuTexture(texture: String) : ItemTexture {
     private val texture = me.arasple.mc.trmenu.module.display.texture.Texture.createTexture(texture)
 
     override fun generate(player: Player): ItemStack {
+
         return texture.generate(MenuSession.getSession(player))
     }
 
