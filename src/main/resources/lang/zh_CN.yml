@@ -10,7 +10,7 @@ Plugin-Update:
 Plugin-Dependency-Hooked: '&8[&2Tr&aHologram&8] &6HOOK &8| &7软依赖 &f{0} &7已兼容.'
 Plugin-Dependency-Abuse: '&8[&2Tr&aHologram&8] &6HOOK &8| &4试图使用未挂钩插件 &c{0}'
 
-Hologram-Loaded: '&8[&2Tr&aHologram&8] &aFINE &8| &a{0} &3个全息已加载 &8({1} ms)'
+Hologram-Loaded: '&8[&2Tr&aHologram&8] &aFINE &8| &a{0} &3个全息图已加载 &8({1} ms)'
 
 Paster-Processing: '&8[&2Tr&aHologram&8] &7正在粘贴内容 ...'
 Paster-Success: '&8[&2Tr&aHologram&8] &3内容已被粘贴到 &a{0}'
@@ -19,19 +19,19 @@ Paster-Failed: '&8[&2Tr&aHologram&8] &c粘贴内容时发现错误. 请检查控
 Command-Help-Type: '命令'
 Command-Help-Args: '参数'
 
-COMMAND-CREATE-DESCRIPTION: '创建一个新的全息'
-COMMAND-DELETE-DESCRIPTION: '删除一个已经存在的全息'
-COMMAND-LIST-DESCRIPTION: '列出已加载的全息'
+COMMAND-CREATE-DESCRIPTION: '创建一个新的全息图'
+COMMAND-DELETE-DESCRIPTION: '删除一个已经存在的全息图'
+COMMAND-LIST-DESCRIPTION: '列出已加载的全息图'
 COMMAND-MIRROR-DESCRIPTION: '监控性能'
-COMMAND-MOVEHERE-DESCRIPTION: '将全息传送到你的位置'
-COMMAND-RELOAD-DESCRIPTION: '重新加载全息'
-COMMAND-TELEPORT-DESCRIPTION: '传送到全息的位置'
+COMMAND-MOVEHERE-DESCRIPTION: '将全息图传送到你的位置'
+COMMAND-RELOAD-DESCRIPTION: '重新加载全息图'
+COMMAND-TELEPORT-DESCRIPTION: '传送到全息图的位置'
 
-Command-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3成功重载全息 &a{0}'
-Command-List-Error: '&8[&2Tr&aHologram&8] &7NORM &8| &7没有发现全息... &8(Filter: {0})'
+Command-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3成功重载全息图 &a{0}'
+Command-List-Error: '&8[&2Tr&aHologram&8] &7NORM &8| &7没有发现全息图... &8(Filter: {0})'
 Command-List-Header:
   - ''
-  - '&8[&2Tr&aHologram&8] &aFINE &8| &7已加载 &f{0} &7个全息 &8(Filter: {1}): '
+  - '&8[&2Tr&aHologram&8] &aFINE &8| &7已加载 &f{0} &7个全息图 &8(Filter: {1}): '
   - ''
 Command-List-Format:
   - type: JSON
@@ -39,12 +39,12 @@ Command-List-Format:
     args:
       - hover: '&7点击传送'
         command: '/trhologram teleport {0}'
-Command-Not-Exists: '&8[&2Tr&aHologram&8] &7NORM &8| &7指定的全息 &f{0} 不存在.'
-Command-Deleted: '&8[&2Tr&aHologram&8] &aNORM &8| &3已删除名为 &3{0} &3的全息.'
+Command-Not-Exists: '&8[&2Tr&aHologram&8] &7NORM &8| &7指定的全息图 &f{0} 不存在.'
+Command-Deleted: '&8[&2Tr&aHologram&8] &aNORM &8| &3已删除名为 &3{0} &3的全息图.'
 Command-Existed:
   - type: TITLE
     title: '&c&l操作失败'
-    subtitle: '&7&l重复的全息 ID'
+    subtitle: '&7&l重复的全息图 ID'
   - type: SOUND
     sound: ITEM_SHIELD_BREAK
     volume: 1
