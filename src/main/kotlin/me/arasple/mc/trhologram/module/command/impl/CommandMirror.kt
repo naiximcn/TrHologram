@@ -1,5 +1,7 @@
 package me.arasple.mc.trhologram.module.command.impl
 
+import me.arasple.mc.trhologram.module.command.CommandExecutor
+import me.arasple.mc.trhologram.module.command.CommandHandler
 import me.arasple.mc.trhologram.module.service.Performance
 import org.bukkit.Bukkit
 import taboolib.common.platform.ProxyCommandSender
@@ -10,12 +12,18 @@ import taboolib.common.platform.function.submit
  * @author Arasple
  * @date 2021/2/12 18:45
  */
-object CommandMirror {
+object CommandMirror : CommandExecutor {
 
-    val command = subCommand {
+    override val command = subCommand {
         execute<ProxyCommandSender> { sender, _, _ ->
             commandMirror(sender)
         }
+    }
+
+    override val name: String = "mirror"
+
+    init {
+        CommandHandler.sub[name] = this
     }
 
     private fun commandMirror(sender: ProxyCommandSender) {

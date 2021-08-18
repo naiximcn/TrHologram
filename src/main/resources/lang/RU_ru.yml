@@ -17,6 +17,17 @@ Paster-Processing: '&8[&2Tr&aHologram&8] &7Вставляем содержимо
 Paster-Success: '&8[&2Tr&aHologram&8] &3Содержимое вставлено за &a{0}'
 Paster-Failed: '&8[&2Tr&aHologram&8] &cПроизошла ошибка при вставке содержимого. Проверьте консоль.'
 
+Command-Help-Type: 'Тип'
+Command-Help-Args: 'Параметры'
+
+COMMAND-CREATE-DESCRIPTION: 'Создание новой голограммы'
+COMMAND-DELETE-DESCRIPTION: 'Удалить существующую голограмму'
+COMMAND-LIST-DESCRIPTION: 'Список загруженных голограмм'
+COMMAND-MIRROR-DESCRIPTION: 'Мониторинг производительности'
+COMMAND-MOVEHERE-DESCRIPTION: 'Телепортируйте голограмму в свое местоположение'
+COMMAND-RELOAD-DESCRIPTION: 'Перезагрузить голограммы'
+COMMAND-TELEPORT-DESCRIPTION: 'Телепортироваться в местоположение голограммы'
+
 Command-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3Голограммы перезагрузились. &a{0}'
 Command-List-Error: '&8[&2Tr&aHologram&8] &7NORM &8| &7Голограм не нашлось 0_0 &8(Filter: {0})'
 Command-List-Header:

@@ -16,8 +16,18 @@ Paster-Processing: '&8[&2Tr&aHologram&8] &7Pasting content ...'
 Paster-Success: '&8[&2Tr&aHologram&8] &3The content has been pasted to &a{0}'
 Paster-Failed: '&8[&2Tr&aHologram&8] &cAn error occurred while pasting the content. Please check out console.'
 
+Command-Help-Type: 'Type'
+Command-Help-Args: 'Parameters'
+
+COMMAND-CREATE-DESCRIPTION: 'Create a new hologram'
+COMMAND-DELETE-DESCRIPTION: 'Delete an existed hologram'
+COMMAND-LIST-DESCRIPTION: 'List loaded holograms'
+COMMAND-MIRROR-DESCRIPTION: 'Monitor performance'
+COMMAND-MOVEHERE-DESCRIPTION: 'Teleport hologram to your location'
+COMMAND-RELOAD-DESCRIPTION: 'Reload holograms'
+COMMAND-TELEPORT-DESCRIPTION: 'Teleport to the hologram''s location'
+
 Command-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3Successfully reloaded the hologram &a{0}'
-Command-List:
 Command-List-Error: '&8[&2Tr&aHologram&8] &7NORM &8| &7No holograms are found... &8(Filter: {0})'
 Command-List-Header:
   - ''

@@ -21,9 +21,8 @@ import org.bukkit.Location
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
 import taboolib.common.io.newFile
-import taboolib.common.platform.function.console
 import taboolib.common.platform.function.releaseResourceFile
-import taboolib.module.lang.sendLang
+import taboolib.platform.util.sendLang
 import java.io.File
 import java.nio.charset.StandardCharsets
 import kotlin.system.measureNanoTime
@@ -68,7 +67,7 @@ object HologramLoader {
 
     fun load(sender: CommandSender) {
         measureNanoTime { load() }.div(1000000.0).let {
-            console().sendLang("Hologram-Loaded", Hologram.holograms.size, it)
+            sender.sendLang("Hologram-Loaded", Hologram.holograms.size, it)
         }
     }
 

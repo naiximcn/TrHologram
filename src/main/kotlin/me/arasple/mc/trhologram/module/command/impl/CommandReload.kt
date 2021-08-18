@@ -1,5 +1,7 @@
 package me.arasple.mc.trhologram.module.command.impl
 
+import me.arasple.mc.trhologram.module.command.CommandExecutor
+import me.arasple.mc.trhologram.module.command.CommandHandler
 import me.arasple.mc.trhologram.module.conf.HologramLoader
 import me.arasple.mc.trhologram.module.display.Hologram
 import org.bukkit.Bukkit
@@ -12,9 +14,9 @@ import java.io.File
  * @author Arasple
  * @date 2021/2/12 17:43
  */
-object CommandReload {
+object CommandReload : CommandExecutor {
 
-    val command = subCommand {
+    override val command = subCommand {
         dynamic(optional = true) {
             suggestion<CommandSender> { _, _ ->
                 Hologram.holograms.map { it.id }
@@ -27,6 +29,12 @@ object CommandReload {
         execute<CommandSender> { sender, _, _ ->
             commandReload(sender, null)
         }
+    }
+
+    override val name: String = "reload"
+
+    init {
+        CommandHandler.sub[name] = this
     }
 
     private fun commandReload(sender: CommandSender, name: String?) {

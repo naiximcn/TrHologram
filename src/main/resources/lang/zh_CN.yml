@@ -16,8 +16,18 @@ Paster-Processing: '&8[&2Tr&aHologram&8] &7正在粘贴内容 ...'
 Paster-Success: '&8[&2Tr&aHologram&8] &3内容已被粘贴到 &a{0}'
 Paster-Failed: '&8[&2Tr&aHologram&8] &c粘贴内容时发现错误. 请检查控制台.'
 
+Command-Help-Type: '命令'
+Command-Help-Args: '参数'
+
+COMMAND-CREATE-DESCRIPTION: '创建一个新的全息'
+COMMAND-DELETE-DESCRIPTION: '删除一个已经存在的全息'
+COMMAND-LIST-DESCRIPTION: '列出已加载的全息'
+COMMAND-MIRROR-DESCRIPTION: '监控性能'
+COMMAND-MOVEHERE-DESCRIPTION: '将全息传送到你的位置'
+COMMAND-RELOAD-DESCRIPTION: '重新加载全息'
+COMMAND-TELEPORT-DESCRIPTION: '传送到全息的位置'
+
 Command-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3成功重载全息 &a{0}'
-Command-List:
 Command-List-Error: '&8[&2Tr&aHologram&8] &7NORM &8| &7没有发现全息... &8(Filter: {0})'
 Command-List-Header:
   - ''
