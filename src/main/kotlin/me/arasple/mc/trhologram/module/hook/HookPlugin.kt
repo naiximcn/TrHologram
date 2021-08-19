@@ -1,30 +1,36 @@
 package me.arasple.mc.trhologram.module.hook
 
-import org.bukkit.Bukkit
+import me.arasple.mc.trhologram.module.hook.impl.HookSkinsRestorer
+import me.arasple.mc.trhologram.module.hook.impl.HookTrMenu
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.console
 import taboolib.module.lang.sendLang
 
 /**
- * @author Arasple
- * @date 2021/2/12 21:12
+ * @author Mical
+ * @date 2021/8/19 21:00
  */
 object HookPlugin {
 
-    val TRMENU by lazy {
-
-        val plugin = Bukkit.getPluginManager().getPlugin("TrMenu")
-
-        plugin != null && plugin.isEnabled && plugin.description.version.startsWith("3")
-
-    }
-
     @Awake(LifeCycle.ENABLE)
     fun printInfo() {
-        if (TRMENU) {
-            console().sendLang("Plugin-Dependency-Hooked", "TrMenu")
+        registry.filter { it.isHooked }.forEach {
+            console().sendLang("Plugin-Dependency-Hooked", it.name)
         }
+    }
+
+    private val registry: Array<HookAbstract> = arrayOf(
+        HookSkinsRestorer(),
+        HookTrMenu()
+    )
+
+    fun getSkinsRestorer(): HookSkinsRestorer {
+        return registry[0] as HookSkinsRestorer
+    }
+
+    fun getTrMenu(): HookTrMenu {
+        return registry[1] as HookTrMenu
     }
 
 }

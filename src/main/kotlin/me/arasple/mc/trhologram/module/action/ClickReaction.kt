@@ -8,7 +8,8 @@ import org.bukkit.entity.Player
  * @author Arasple
  * @date 2021/2/12 14:11
  */
-inline class ClickReaction(private val reactions: Map<Type, Reaction>) : ClickHandler {
+@JvmInline
+value class ClickReaction(private val reactions: Map<Type, Reaction>) : ClickHandler {
 
     override fun eval(player: Player, type: Type) {
         reactions[Type.ALL]?.eval(player)

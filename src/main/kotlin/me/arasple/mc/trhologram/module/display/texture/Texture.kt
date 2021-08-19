@@ -153,7 +153,6 @@ class Texture(
             }
         }
 
-
         fun serializeColor(color: String): Color {
             val rgb = color.split(",").toTypedArray()
             if (rgb.size == 3) {

@@ -1,7 +1,8 @@
+![animate_60fps_.gif](https://i.loli.net/2021/08/19/wnVevcdAjBr2NXb.gif)
 # TrHologram
 
 #### Modern & Lightweight Holographic-Plugin
-![](https://img.shields.io/github/last-commit/Arasple/TrHologram?logo=artstation&style=for-the-badge&color=9266CC)![](https://img.shields.io/github/issues/Arasple/TrHologram?style=for-the-badge&logo=slashdot)![](https://img.shields.io/github/release/Arasple/TrHologram?style=for-the-badge&color=00C58E&logo=ionic)
+![](https://img.shields.io/github/last-commit/Micalhl/TrHologram?logo=artstation&style=for-the-badge&color=9266CC)![](https://img.shields.io/github/issues/Micalhl/TrHologram?style=for-the-badge&logo=slashdot)![](https://img.shields.io/github/release/Arasple/TrHologram?style=for-the-badge&color=00C58E&logo=ionic)
 
 ---
 

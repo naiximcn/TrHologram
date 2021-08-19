@@ -5,9 +5,11 @@ import com.google.gson.JsonParser
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import me.arasple.mc.trhologram.api.nms.NMS
+import me.arasple.mc.trhologram.module.hook.HookPlugin
 import org.bukkit.Bukkit
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
+import taboolib.common.platform.function.console
 import taboolib.common.platform.function.submit
 import taboolib.library.xseries.XMaterial
 import java.net.URL
@@ -34,8 +36,12 @@ object Heads {
     }
 
     fun getPlayerHead(name: String): ItemStack {
-        return CACHED_SKULLS.computeIfAbsent(name) {
-            DEFAULT_HEAD.clone().also { item -> playerTexture(name) { modifyTexture(it, item) } }
+        if (CACHED_SKULLS.containsKey(name)) {
+            return CACHED_SKULLS[name] ?: DEFAULT_HEAD
+        } else {
+            CACHED_SKULLS[name] = DEFAULT_HEAD.clone()
+                .also { item -> playerTexture(name) { modifyTexture(it, item) } ?: return DEFAULT_HEAD }
+            return CACHED_SKULLS[name] ?: DEFAULT_HEAD
         }
     }
 
@@ -62,16 +68,25 @@ object Heads {
     /**
      * PRIVATE UTILS
      */
-    private fun playerTexture(name: String, block: (String) -> Unit) {
-        when (Bukkit.getPlayer(name)?.isOnline) {
-            true -> {
+    @Suppress("DEPRECATION")
+    private fun playerTexture(name: String, block: (String) -> Unit): Unit? {
+        when {
+            HookPlugin.getSkinsRestorer().isHooked -> {
+                HookPlugin.getSkinsRestorer().getPlayerSkinTexture(name)?.also(block) ?: return null
+            }
+            Bukkit.getPlayer(name)?.isOnline == true -> {
                 NMS.INSTANCE.getGameProfile(Bukkit.getPlayer(name)!!).properties["textures"]
                     .find { it.value != null }?.value
                     ?.also(block)
+                    ?: return null
             }
             else -> {
                 submit(async = true) {
-                    val profile = JsonParser().parse(fromURL("${MOJANG_API[0]}$name")) as JsonObject
+                    val profile = JsonParser().parse(fromURL("${MOJANG_API[0]}$name")) as? JsonObject
+                    if (profile == null) {
+                        console().sendMessage("§7[§3Texture§7] Texture player $name not found.")
+                        return@submit
+                    }
                     val uuid = profile["id"].asString
                     (JsonParser().parse(fromURL("${MOJANG_API[1]}$uuid")) as JsonObject).getAsJsonArray("properties")
                     (JsonParser().parse(fromURL("${MOJANG_API[1]}$uuid")) as JsonObject).getAsJsonArray("properties")
@@ -83,6 +98,7 @@ object Heads {
                 }
             }
         }
+        return Unit
     }
 
     private fun modifyTexture(input: String, itemStack: ItemStack): ItemStack {
@@ -110,6 +126,5 @@ object Heads {
             ""
         }
     }
-
 
 }

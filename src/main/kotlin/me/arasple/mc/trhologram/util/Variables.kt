@@ -31,5 +31,4 @@ class Variables(source: String, regex: Regex, group: (List<String>) -> String = 
 
     class Element(var value: String, var isVariable: Boolean = false)
 
-
 }

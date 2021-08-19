@@ -4,7 +4,6 @@ import org.bukkit.inventory.EquipmentSlot
 import taboolib.module.nms.MinecraftVersion
 import java.util.*
 
-
 /**
  * 装备类型转换工具
  *
@@ -12,6 +11,7 @@ import java.util.*
  * @Since 2019-04-25 22:01
  */
 enum class Equipments(val bukkit: EquipmentSlot, val nms: String, val slot: Int) {
+
     /**
      * 主手
      */
@@ -54,5 +54,7 @@ enum class Equipments(val bukkit: EquipmentSlot, val nms: String, val slot: Int)
             return Arrays.stream(values()).filter { tEquipment: Equipments -> tEquipment.bukkit == bukkit }
                 .findFirst().orElse(null)
         }
+
     }
+
 }

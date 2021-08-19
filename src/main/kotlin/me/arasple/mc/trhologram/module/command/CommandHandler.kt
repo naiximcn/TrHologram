@@ -14,6 +14,7 @@ import taboolib.platform.util.asLangText
 
 /**
  * @author Arasple
+ * @author Score2
  * @date 2021/2/11 16:46
  */
 @CommandHeader(name = "trhologram", aliases = ["hologram", "trhd", "hd"], permission = "trhologram.access")

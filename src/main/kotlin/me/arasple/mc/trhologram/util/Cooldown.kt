@@ -1,5 +1,9 @@
 package me.arasple.mc.trhologram.util
 
+/**
+ * @author Mical
+ * @date 2021/8/16 18:54
+ */
 class Cooldown {
 
     var plugin: String

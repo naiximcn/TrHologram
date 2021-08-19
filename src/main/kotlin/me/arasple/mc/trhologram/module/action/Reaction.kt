@@ -8,7 +8,8 @@ import java.util.concurrent.CompletableFuture
  * @author Arasple
  * @date 2021/2/11 16:31
  */
-inline class Reaction(private val kether: String) {
+@JvmInline
+value class Reaction(private val kether: String) {
 
     constructor(kethers: List<String>) : this(kethers.joinToString("\n"))
 

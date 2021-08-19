@@ -123,7 +123,7 @@ object HologramLoader {
 
             val hologram = when {
                 isItem ->{
-                    val texture = if (!HookPlugin.TRMENU) Texture.createTexture(itemDisplay!!) else TrMenuTexture(itemDisplay!!)
+                    val texture = if (!HookPlugin.getTrMenu().isHooked) Texture.createTexture(itemDisplay!!) else TrMenuTexture(itemDisplay!!)
                     ItemHologram(texture, position, update)
                 }
                 line.isBlank() -> null

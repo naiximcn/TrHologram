@@ -74,16 +74,17 @@ class Hologram(
 
     private fun deployment() {
         refreshTask?.cancel()
-        if (refreshCondition > 0) refreshTask = submit(delay = refreshCondition, period = refreshCondition, async = true) {
-            viewers.removeIf {
-                val player = Bukkit.getPlayerExact(it)
-                player == null || !player.isOnline
+        if (refreshCondition > 0) refreshTask =
+            submit(delay = refreshCondition, period = refreshCondition, async = true) {
+                viewers.removeIf {
+                    val player = Bukkit.getPlayerExact(it)
+                    player == null || !player.isOnline
+                }
+                Bukkit.getOnlinePlayers().filter { visibleByDistance(it) }.forEach {
+                    refreshCondition(it)
+                    refreshVisibility(it)
+                }
             }
-            Bukkit.getOnlinePlayers().filter { visibleByDistance(it) }.forEach {
-                refreshCondition(it)
-                refreshVisibility(it)
-            }
-        }
     }
 
     fun refreshVisibility(player: Player) {
