@@ -44,6 +44,10 @@ class NMSImpl : NMS() {
             val id = it.entityId
 
             when (it) {
+                // Set Entity velocity
+                is PacketEntityVelocity -> {
+                    sendPacket(player, PacketPlayOutEntityVelocity(id, Vec3D(it.x, it.y, it.z)))
+                }
                 // Destroy entity
                 is PacketEntityDestroy -> sendPacket(player, PacketPlayOutEntityDestroy(id))
                 // Spawn Armor Stand
