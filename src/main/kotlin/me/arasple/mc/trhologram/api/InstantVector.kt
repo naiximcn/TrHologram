@@ -43,7 +43,7 @@ class InstantVector(val x: Double, val y: Double, val z: Double, val arrival: Lo
     companion object {
 
         @JvmStatic
-        fun fromVelocity(v: Vector, arrival: Long= 0) =
+        fun fromVector(v: Vector, arrival: Long= 0) =
             InstantVector(v.x, v.y, v.z, arrival)
 
     }
