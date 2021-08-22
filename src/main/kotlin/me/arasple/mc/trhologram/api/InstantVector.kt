@@ -31,6 +31,7 @@ class InstantVector(val x: Double, val y: Double, val z: Double, val arrival: Lo
         NMS.INSTANCE.sendEntityPacket(player, PacketEntityVelocity(entityId, vec.x, vec.y, vec.z))
         submit(delay = arrival) {
             NMS.INSTANCE.sendEntityPacket(player, PacketEntityVelocity(entityId, 0.0, 0.0, 0.0))
+            useing.remove(entityId)
         }
     }
 
