@@ -3,6 +3,7 @@ package me.arasple.mc.trhologram
 import me.arasple.mc.trhologram.api.Settings
 import me.arasple.mc.trhologram.module.conf.HologramLoader
 import me.arasple.mc.trhologram.module.display.Hologram
+import me.arasple.mc.trhologram.module.service.Updater
 import org.bukkit.Bukkit
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.function.console
@@ -34,6 +35,8 @@ object TrHologram : Plugin() {
         Settings.init()
         HologramLoader.load(Bukkit.getConsoleSender())
         console().sendLang("Plugin-Enabled", pluginVersion)
+
+        Updater.init()
     }
 
     override fun onDisable() {

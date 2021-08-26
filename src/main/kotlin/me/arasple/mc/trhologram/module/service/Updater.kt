@@ -1,23 +1,18 @@
 package me.arasple.mc.trhologram.module.service
 
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import me.arasple.mc.trhologram.TrHologram
 import org.bukkit.event.player.PlayerJoinEvent
-import taboolib.common.LifeCycle
-import taboolib.common.env.DependencyDownloader
-import taboolib.common.platform.Awake
 import taboolib.common.platform.event.EventPriority
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.console
-import taboolib.common.platform.function.pluginId
+import taboolib.common.platform.function.pluginVersion
 import taboolib.common.platform.function.submit
 import taboolib.module.lang.sendLang
 import taboolib.platform.util.sendLang
-import java.io.BufferedInputStream
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.charset.StandardCharsets
-import java.util.*
 
 /**
  * @author Arasple
@@ -25,53 +20,48 @@ import java.util.*
  */
 object Updater {
 
-    private val API_URL = "https://api.github.com/repos/Arasple/${pluginId}/releases/latest"
-    private val DESCRIPTION = TrHologram.plugin.description
-    private var NOTIFY = false
-    val CURRENT_VERSION = DESCRIPTION.version.split("-")[0].toDoubleOrNull() ?: -1.0
-    var LATEST_VERSION = -1.0
-    val NOTIFIED = mutableSetOf<UUID>()
+    private val url = URL("https://gitee.com/micalhl/File0/raw/master/Updater/Collection.txt")
 
-    @Awake(LifeCycle.INIT)
     fun init() {
-//        if (CURRENT_VERSION < 0) disablePlugin()
         submit(delay = 20, period = (10 * 60 * 20), async = true) {
             grabInfo()
         }
     }
 
     private fun grabInfo() {
-        if (LATEST_VERSION > 0) {
-            return
-        }
-        val read: String
-        try {
-            URL(API_URL).openStream().use { inputStream ->
-                BufferedInputStream(inputStream).use { bufferedInputStream ->
-                    read = DependencyDownloader.readFully(bufferedInputStream, StandardCharsets.UTF_8)
-                    val json = JsonParser().parse(read) as JsonObject
-                    val latestVersion = json.get("tag_name").asDouble
-                    if (latestVersion > CURRENT_VERSION) {
-                        LATEST_VERSION = latestVersion
-//                        if (LATEST_VERSION < 0) PluginBoot.setEnableBoot(false)
-                        if (!NOTIFY) {
-                            NOTIFY = true
-                            console().sendLang("Plugin-Update", LATEST_VERSION)
-                        }
-                    }
-                }
-            }
-        } catch (e: Throwable) {
-
+        val latest = getLatestVersion()
+        if (latest != null && latest != pluginVersion) {
+            console().sendLang("Plugin-Update", latest)
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    fun onJoin(e: PlayerJoinEvent) {
-        val player = e.player
-        if (player.isOp && LATEST_VERSION > CURRENT_VERSION && !NOTIFIED.contains(player.uniqueId)) {
-            player.sendLang("Plugin-Update", LATEST_VERSION)
-            NOTIFIED.add(player.uniqueId)
+    private fun getLatestVersion(): String? {
+        var connection: HttpURLConnection? = null
+        try {
+            connection = url.openConnection() as HttpURLConnection
+            connection.connectTimeout = 5000
+            val buffer = StringBuilder(255)
+            BufferedReader(InputStreamReader(connection.inputStream, StandardCharsets.UTF_8)).use { reader ->
+                val buffer0 = CharArray(255)
+                while (true) {
+                    val length = reader.read(buffer0)
+                    if (length == -1) break
+                    buffer.append(buffer0, 0, length)
+                }
+            }
+            return buffer.toString().trim()
+        } catch (ignored: Throwable) {
+        } finally {
+            connection?.disconnect()
+        }
+        return null
+    }
+
+    @SubscribeEvent(EventPriority.HIGHEST)
+    fun e(e: PlayerJoinEvent) {
+        val latest = getLatestVersion()
+        if (latest != null && latest != pluginVersion && e.player.isOp) {
+            e.player.sendLang("Plugin-Update", latest)
         }
     }
 

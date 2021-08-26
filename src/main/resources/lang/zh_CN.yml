@@ -6,7 +6,7 @@ Plugin-Loading:
 Plugin-Enabled: '&8[&2Tr&aHologram&8] &bINFO &8| &3插件启用. 当前运行版本 &2{0}&7.'
 Plugin-Update:
   - '&8[&2Tr&aHologram&8] &bUPDATE &8| &3更新 &a{0}&3 找到, 通过下方链接下载!'
-  - '&bhttps://www.spigotmc.org/resources/75503/'
+  - '&bhttps://github.com/Micalhl/TrHologram/actions'
 Plugin-Dependency-Hooked: '&8[&2Tr&aHologram&8] &6HOOK &8| &7软依赖 &f{0} &7已兼容.'
 Plugin-Dependency-Abuse: '&8[&2Tr&aHologram&8] &6HOOK &8| &4试图使用未挂钩插件 &c{0}'
 
