@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets
  */
 object Updater {
 
-    private val url = URL("https://gitee.com/micalhl/File0/raw/master/Updater/Collection.txt")
+    private val url = URL("https://github.com/Micalhl/TrHologram/raw/master/Version.txt")
 
     fun init() {
         submit(delay = 20, period = (10 * 60 * 20), async = true) {
