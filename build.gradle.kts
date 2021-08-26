@@ -52,6 +52,6 @@ dependencies {
     compileOnly("ink.ptms.core:v11200:11200:all")
     compileOnly("ink.ptms.core:v10900:10900:all")
     compileOnly("me.clip:placeholderapi:2.10.9")
-    compileOnly("me.arasple:TrMenu:3.0-PRE-18:pure")
+    compileOnly("me.arasple:TrMenu:3.0-PRE-20:pure")
     compileOnly(fileTree("libs"))
 }
