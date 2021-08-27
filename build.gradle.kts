@@ -5,7 +5,7 @@ plugins {
 }
     
 group = "me.arasple.mc.trhologram"
-version = "2.4-pre15"
+version = "2.4-pre16"
 description = "Modern & Advanced Hologram-Plugin for Minecraft Servers"
 
 taboolib {
@@ -34,7 +34,7 @@ taboolib {
     }
 
     classifier = null
-    version = "6.0.0-pre54"
+    version = "6.0.0-pre62"
 }
 
 repositories {
