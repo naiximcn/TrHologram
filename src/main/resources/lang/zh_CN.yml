@@ -1,8 +1,8 @@
 Plugin-UnsupportedVersion: '&8[&2Tr&aHologram&8] &cERROR &8| &c插件不支持当前服务器版本'
 Plugin-Loading:
-  - ''
+  - '&r'
   - '&7正在加载 &2Tr&aHologram... &8{0}'
-  - ''
+  - '&r'
 Plugin-Enabled: '&8[&2Tr&aHologram&8] &bINFO &8| &3插件启用. 当前运行版本 &2{0}&7.'
 Plugin-Update:
   - '&8[&2Tr&aHologram&8] &bUPDATE &8| &3更新 &a{0}&3 找到, 通过下方链接下载!'

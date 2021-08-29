@@ -128,6 +128,23 @@ class NMSImpl : NMS() {
                         getMetaEntityBoolean(3, it.isCustomNameVisible)
                     )
                 }
+                is PacketHeadRotation -> {
+                    if (MinecraftVersion.isUniversal) {
+                        sendPacket(
+                            player,
+                            PacketPlayOutEntityHeadRotation::class.java.unsafeInstance(),
+                            "id" to id,
+                            "headYaw" to it.headYaw
+                        )
+                    } else {
+                        sendPacket(
+                            player,
+                            PacketPlayOutEntityHeadRotation(),
+                            "a" to id,
+                            "b" to it.headYaw
+                        )
+                    }
+                }
                 is PacketEquipment -> updateEquipment(player, id, it.slot, it.itemStack)
             }
         }

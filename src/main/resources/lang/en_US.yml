@@ -1,8 +1,8 @@
 Plugin-UnsupportedVersion: '&8[&2Tr&aHologram&8] &cERROR &8| &cPlugin does not support this outdated Minecraft version'
 Plugin-Loading:
-  - ''
+  - '&r'
   - '&7Loading &2Tr&aHologram... &8{0}'
-  - ''
+  - '&r'
 Plugin-Enabled: '&8[&2Tr&aHologram&8] &bINFO &8| &3Plugin has been enabled. Currently running version &2{0}&7.'
 Plugin-Update:
   - '&8[&2Tr&aHologram&8] &bUPDATE &8| &3Update &a{0}&3 found ! Download it from the link below for new features and bug fix!'

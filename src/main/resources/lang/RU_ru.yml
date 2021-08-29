@@ -1,9 +1,9 @@
 Plugin-UnsupportedVersion: '&8[&2Tr&aHologram&8] &cERROR &8| &cПлагин не поддерживает версию сервера Minecraft!'
 Plugin-Loading:
-  - ''
+  - '&r'
   - '&7Загрузка &2Tr&aHologram... &8{0}'
   - '&aПеревод подготовлен UnknownZuVEnO'
-  - ''
+  - '&r'
 Plugin-Enabled: '&8[&2Tr&aHologram&8] &bINFO &8| &3Плагин запущен! Версия плагина &2{0}&7.'
 Plugin-Update:
   - '&8[&2Tr&aHologram&8] &bUPDATE &8| &3Обновление &a{0}&3 найдено! Скачайте его для исправления багов и новых фишек!'
