@@ -1,6 +1,7 @@
 package me.arasple.mc.trhologram.module.service
 
 import org.bukkit.event.player.PlayerJoinEvent
+import taboolib.common.platform.Schedule
 import taboolib.common.platform.event.EventPriority
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.console
@@ -13,6 +14,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.charset.StandardCharsets
+import java.util.*
 
 /**
  * @author Arasple
@@ -21,6 +23,9 @@ import java.nio.charset.StandardCharsets
 object Updater {
 
     private val url = URL("https://github.com/Micalhl/TrHologram/raw/master/Version.txt")
+    private var LATEST_VERSION: String? = ""
+    private var NOTIFIED = false
+    private val NOTIFIED_PLAYER = mutableSetOf<UUID>()
 
     fun init() {
         submit(delay = 20, period = (10 * 60 * 20), async = true) {
@@ -28,10 +33,13 @@ object Updater {
         }
     }
 
+    @Schedule(true, 20, 20 * 60 * 10)
     private fun grabInfo() {
-        val latest = getLatestVersion()
-        if (latest != null && latest != pluginVersion) {
-            console().sendLang("Plugin-Update", latest)
+        LATEST_VERSION = getLatestVersion().also {
+            if (it != null && !NOTIFIED && it != pluginVersion) {
+                console().sendLang("Plugin-Update", it)
+                NOTIFIED = true
+            }
         }
     }
 
@@ -59,9 +67,11 @@ object Updater {
 
     @SubscribeEvent(EventPriority.HIGHEST)
     fun e(e: PlayerJoinEvent) {
-        val latest = getLatestVersion()
-        if (latest != null && latest != pluginVersion && e.player.isOp) {
-            e.player.sendLang("Plugin-Update", latest)
+        LATEST_VERSION?.let {
+            if (e.player.isOp && LATEST_VERSION != pluginVersion && !NOTIFIED_PLAYER.contains(e.player.uniqueId)) {
+                e.player.sendLang("Plugin-Update", it)
+                NOTIFIED_PLAYER.add(e.player.uniqueId)
+            }
         }
     }
 
