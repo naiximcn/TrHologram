@@ -31,7 +31,40 @@
 
 ### API
 
-Usage
+#### Dependency
+
+In Maven:
+```xml
+    <repositories>
+      <repository>
+        <id>roselle-public</id>
+        <url>https://repo.mcage.cn/repository/maven-public/</url>
+      </repository>
+    </repositories>
+
+    <dependencies>
+      <dependency>
+        <groupId>me.arasple</groupId>
+        <artifactId>trmenu</artifactId>
+        <version>3.0-PRE-20</version>
+        <classifier>pure</classifier>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+```
+
+In Gradle Kotlin DSL:
+```kotlin
+repositories {
+  maven("https://repo.mcage.cn/repository/maven-public/")
+}
+dependencies {
+  compileOnly("me.arasple:TrMenu:3.0-PRE-20:pure")
+}
+
+```
+
+#### Usage
 
 ```java
 class Demo {
