@@ -25,7 +25,7 @@ object TrHologramAPI {
      */
     private var INDEX = resetIndex()
 
-    internal fun getIndex(): Int {
+    fun getIndex(): Int {
         return INDEX++
     }
 
