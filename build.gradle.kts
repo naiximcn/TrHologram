@@ -1,7 +1,9 @@
 plugins {
+    `maven-publish`
     id("java")
-    id("io.izzel.taboolib") version "1.18"
+    id("io.izzel.taboolib") version "1.26"
     id("org.jetbrains.kotlin.jvm") version "1.5.10"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
     
 group = "me.arasple.mc.trhologram"
@@ -41,7 +43,7 @@ repositories {
     mavenCentral()
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.codemc.org/repository/maven-public/")
-    maven("https://repo.mcage.cn/repository/maven-releases/")
+    maven("https://repo.iroselle.com/repository/maven-releases/")
 }
 
 dependencies {
@@ -54,4 +56,44 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.10.9")
     compileOnly("me.arasple:TrMenu:3.0-PRE-20:pure")
     compileOnly(fileTree("libs"))
+}
+
+
+tasks.shadowJar {
+    dependencies {
+        taboolib.modules.forEach { exclude(dependency("io.izzel:taboolib:${taboolib.version}:$it")) }
+        exclude(dependency("com.google.code.gson:gson:2.8.6"))
+        exclude(dependency("org.bstats:bstats-bukkit:1.5"))
+
+        exclude("data")
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/maven")
+        exclude("lang")
+        exclude("holograms")
+        exclude("*.yml")
+    }
+    relocate("taboolib", "${project.group}.taboolib")
+    archiveClassifier.set("pure")
+}
+
+configure<PublishingExtension> {
+    publications {
+        create<MavenPublication>("shadow") {
+            shadow.component(this)
+            groupId = "me.arasple"
+        }
+    }
+    repositories {
+        maven {
+            url = uri("https://repo.iroselle.com/repository/maven-releases/")
+            credentials {
+                file("access.txt").also {
+                    if (!it.exists()) return@credentials
+                }.readLines().apply {
+                    username = this[0]
+                    password = this[1]
+                }
+            }
+        }
+    }
 }
