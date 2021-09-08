@@ -129,7 +129,7 @@ class Texture(
                 if (id is Int) {
                     XMaterial.matchXMaterial(id, 0).let {
                         if (it.isPresent) {
-                            this.material = it.get()
+                            this.material = it.get().parseMaterial()!!
                             this.damage = data
                         } else {
                             XMaterial.STONE
@@ -139,7 +139,7 @@ class Texture(
                 } else {
                     val name = id.toString()
                     try {
-                        this.material = XMaterial.valueOf(name)
+                        this.material = XMaterial.valueOf(name).parseMaterial()!!
                     } catch (e: Throwable) {
                         val xMaterial =
                             XMaterial.values().find { it.name.equals(name, true) }
