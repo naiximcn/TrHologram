@@ -3,7 +3,6 @@ package me.arasple.mc.trhologram.api.nms
 import com.mojang.authlib.GameProfile
 import com.mojang.datafixers.util.Pair
 import me.arasple.mc.trhologram.api.nms.packet.*
-import me.arasple.mc.trhologram.util.Equipments
 import me.arasple.mc.trhologram.util.ItemHelper
 import net.minecraft.server.v1_16_R1.*
 import net.minecraft.server.v1_16_R3.ChatComponentText
@@ -19,6 +18,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Vector
 import taboolib.common.reflect.Reflex.Companion.unsafeInstance
 import taboolib.module.nms.MinecraftVersion
+import taboolib.type.BukkitEquipment
 import java.util.*
 
 /**
@@ -64,7 +64,7 @@ class NMSImpl : NMS() {
                             "xa" to 0,
                             "ya" to 0,
                             "za" to 0,
-                            "type" to if (it.type) if (version >= 11400) EntityTypes.ARMOR_STAND else 78 else if (version >= 11400) EntityTypes.ITEM else 2
+                            "type" to if (it.type) EntityTypes.ARMOR_STAND else EntityTypes.ITEM
                         )
                     } else {
                         sendPacket(
@@ -80,7 +80,7 @@ class NMSImpl : NMS() {
                             "k" to if (it.type) if (version >= 11400) EntityTypes.ARMOR_STAND else 78 else if (version >= 11400) EntityTypes.ITEM else 2
                         )
                     }
-                    // Cancel graivity
+                    // Cancel gravity
                     sendEntityMetadata(
                         player,
                         id,
@@ -194,7 +194,7 @@ class NMSImpl : NMS() {
                         entityId,
                         listOf(
                             Pair(
-                                EnumItemSlot.fromName(Equipments.fromBukkit(slot)?.nms),
+                                EnumItemSlot.fromName(BukkitEquipment.fromBukkit(slot)?.nms),
                                 org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack.asNMSCopy(itemStack)
                             )
                         )
@@ -206,7 +206,7 @@ class NMSImpl : NMS() {
                     player,
                     net.minecraft.server.v1_13_R2.PacketPlayOutEntityEquipment(
                         entityId,
-                        net.minecraft.server.v1_13_R2.EnumItemSlot.fromName(Equipments.fromBukkit(slot)?.nms),
+                        net.minecraft.server.v1_13_R2.EnumItemSlot.fromName(BukkitEquipment.fromBukkit(slot)?.nms),
                         org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack.asNMSCopy(itemStack)
                     )
                 )
@@ -216,7 +216,7 @@ class NMSImpl : NMS() {
                     player,
                     net.minecraft.server.v1_12_R1.PacketPlayOutEntityEquipment(
                         entityId,
-                        net.minecraft.server.v1_12_R1.EnumItemSlot.a(Equipments.fromBukkit(slot)?.nms),
+                        net.minecraft.server.v1_12_R1.EnumItemSlot.a(BukkitEquipment.fromBukkit(slot)?.nms),
                         org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(itemStack)
                     )
                 )

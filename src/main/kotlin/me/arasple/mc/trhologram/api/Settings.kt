@@ -14,15 +14,14 @@ class Settings {
 
     companion object {
 
-        @Config("settings.yml", migrate = true)
+        @Config("settings.yml", migrate = true, autoReload = true)
         lateinit var CONF: SecuredFile
             private set
 
         internal var INSTANCE = Settings()
 
         fun init() {
-//            CONF.listener { onSettingsReload() }.also { onSettingsReload() }
-            FileWatcher.INSTANCE.addSimpleListener(CONF.file) {
+            CONF.onReload {
                 onSettingsReload()
             }
         }

@@ -1,13 +1,13 @@
 plugins {
     `maven-publish`
     id("java")
-    id("io.izzel.taboolib") version "1.26"
+    id("io.izzel.taboolib") version "1.31"
     id("org.jetbrains.kotlin.jvm") version "1.5.10"
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
     
 group = "me.arasple.mc.trhologram"
-version = "2.4-pre20"
+version = "2.4-pre21"
 description = "Modern & Advanced Hologram-Plugin for Minecraft Servers"
 
 taboolib {
@@ -32,11 +32,12 @@ taboolib {
             name("PlaceholderAPI").optional(true)
             name("TrMenu").optional(true)
             name("SkinsRestorer").optional(true)
+            name("Multiverse-Core").optional(true)
         }
     }
 
     classifier = null
-    version = "6.0.1-8"
+    version = "6.0.3-18"
 }
 
 repositories {
