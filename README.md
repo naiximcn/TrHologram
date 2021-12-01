@@ -10,6 +10,9 @@
 
 ---
 
+### Oops!
+Because of my studies, the updates is slowing down. Sorry :(
+
 ### Features
 
 - **Highly Optimized**

@@ -7,7 +7,7 @@ plugins {
 }
     
 group = "me.arasple.mc.trhologram"
-version = "2.4-pre20"
+version = "2.4-pre22"
 description = "Modern & Advanced Hologram-Plugin for Minecraft Servers"
 
 taboolib {
@@ -36,14 +36,13 @@ taboolib {
     }
 
     classifier = null
-    version = "6.0.1-8"
+    version = "6.0.6-3"
 }
 
 repositories {
     mavenCentral()
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.codemc.org/repository/maven-public/")
-    maven("https://repo.iroselle.com/repository/maven-releases/")
 }
 
 dependencies {
@@ -54,7 +53,6 @@ dependencies {
     compileOnly("ink.ptms.core:v11200:11200:all")
     compileOnly("ink.ptms.core:v10900:10900:all")
     compileOnly("me.clip:placeholderapi:2.10.9")
-    compileOnly("me.arasple:TrMenu:3.0-PRE-20:pure")
     compileOnly(fileTree("libs"))
 }
 
