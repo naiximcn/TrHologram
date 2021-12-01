@@ -22,6 +22,7 @@ import java.util.*
  */
 object Updater {
 
+    // FIXME: 从某种意义上来说, 有没有可能网络延迟太大然后无法获取到版本号? 也许应该换一个地方存.
     private val url = URL("https://github.com/Micalhl/TrHologram/raw/master/Version.txt")
     private var LATEST_VERSION: String? = ""
     private var NOTIFIED = false

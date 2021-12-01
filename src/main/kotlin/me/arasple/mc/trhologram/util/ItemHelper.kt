@@ -20,7 +20,7 @@ object ItemHelper {
 
     fun fromJson(json: String): ItemStack? {
         try {
-            val parse = JsonParser().parse(json)
+            val parse = JsonParser.parseString(json)
             if (parse is JsonObject) {
                 val itemBuild = buildItem(parse["type"].let { it ?: XMaterial.STONE; XMaterial.valueOf(it.asString) }) {
                     parse["data"].let {

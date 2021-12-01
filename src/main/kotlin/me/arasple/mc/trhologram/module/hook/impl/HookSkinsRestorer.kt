@@ -29,7 +29,7 @@ class HookSkinsRestorer : HookAbstract() {
                 return null
             }
 
-            val skinData = it.getProfile(name)
+            val skinData = it.getSkinData(name)
             return (skinData as Property).value
         }
         return null
