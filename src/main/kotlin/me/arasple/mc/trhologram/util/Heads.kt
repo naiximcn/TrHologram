@@ -88,8 +88,8 @@ object Heads {
                         return@submit
                     }
                     val uuid = profile["id"].asString
-                    (JsonParser().parse(fromURL("${MOJANG_API[1]}$uuid")) as JsonObject).getAsJsonArray("properties")
-                    (JsonParser().parse(fromURL("${MOJANG_API[1]}$uuid")) as JsonObject).getAsJsonArray("properties")
+                    (JsonParser.parseString(fromURL("${MOJANG_API[1]}$uuid")) as JsonObject).getAsJsonArray("properties")
+                    (JsonParser.parseString(fromURL("${MOJANG_API[1]}$uuid")) as JsonObject).getAsJsonArray("properties")
                         .forEach {
                             if ("textures" == it.asJsonObject["name"].asString) {
                                 CACHED_PLAYER_TEXTURE[name] = it.asJsonObject["value"].asString.also(block)
