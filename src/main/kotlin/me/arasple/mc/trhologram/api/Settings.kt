@@ -1,9 +1,10 @@
 package me.arasple.mc.trhologram.api
 
+import taboolib.common.platform.function.console
 import taboolib.common5.Baffle
-import taboolib.common5.FileWatcher
 import taboolib.module.configuration.Config
-import taboolib.module.configuration.SecuredFile
+import taboolib.module.configuration.Configuration
+import taboolib.module.lang.sendLang
 import java.util.concurrent.TimeUnit
 
 /**
@@ -14,16 +15,16 @@ class Settings {
 
     companion object {
 
-        @Config("settings.yml", migrate = true)
-        lateinit var CONF: SecuredFile
+        @Config("settings.yml", migrate = true, autoReload = true)
+        lateinit var CONF: Configuration
             private set
 
         internal var INSTANCE = Settings()
 
         fun init() {
-//            CONF.listener { onSettingsReload() }.also { onSettingsReload() }
-            FileWatcher.INSTANCE.addSimpleListener(CONF.file) {
+            CONF.onReload {
                 onSettingsReload()
+                console().sendLang("Configuration-Auto-Reload")
             }
         }
 

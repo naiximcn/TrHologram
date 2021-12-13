@@ -1,5 +1,6 @@
 package me.arasple.mc.trhologram.module.command.impl
 
+import me.arasple.mc.trhologram.api.Settings
 import me.arasple.mc.trhologram.module.command.CommandExecutor
 import me.arasple.mc.trhologram.module.command.CommandHandler
 import me.arasple.mc.trhologram.module.conf.HologramLoader
@@ -38,6 +39,7 @@ object CommandReload : CommandExecutor {
     }
 
     private fun commandReload(sender: CommandSender, name: String?) {
+        Settings.onSettingsReload()
         val hologram = Hologram.findHologram { it.id.equals(name, true) }
 
         if (hologram != null) {
