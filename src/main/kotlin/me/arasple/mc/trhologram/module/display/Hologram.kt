@@ -8,11 +8,11 @@ import me.arasple.mc.trhologram.api.hologram.HologramBuilder
 import me.arasple.mc.trhologram.api.hologram.HologramComponent
 import me.arasple.mc.trhologram.api.hologram.ItemHologram
 import me.arasple.mc.trhologram.api.hologram.TextHologram
-import me.arasple.mc.trhologram.module.service.Performance
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import taboolib.common.platform.function.submit
 import taboolib.common.platform.service.PlatformExecutor
+import taboolib.common5.mirrorNow
 
 /**
  * @author Arasple
@@ -39,7 +39,7 @@ class Hologram(
         }
 
         fun refreshAll(player: Player) {
-            Performance.check("Hologram:Event:Refresh") {
+            mirrorNow("Hologram:Event:Refresh") {
                 externalHolograms.filter { it.sameWorld(player) }.forEach {
                     it.refreshVisibility(player)
                 }

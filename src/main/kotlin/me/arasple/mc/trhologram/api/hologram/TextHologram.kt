@@ -5,9 +5,9 @@ import me.arasple.mc.trhologram.api.base.TickEvent
 import me.arasple.mc.trhologram.api.nms.packet.PacketArmorStandModify
 import me.arasple.mc.trhologram.api.nms.packet.PacketArmorStandName
 import me.arasple.mc.trhologram.api.nms.packet.PacketEntitySpawn
-import me.arasple.mc.trhologram.module.service.Performance
 import me.arasple.mc.trhologram.util.parseString
 import org.bukkit.entity.Player
+import taboolib.common5.mirrorNow
 
 /**
  * @author Arasple
@@ -49,7 +49,7 @@ class TextHologram(
     }
 
     override fun onTick() {
-        Performance.check("Hologram:Event:Tick:TextComponent") {
+        mirrorNow("Hologram:Event:Tick:TextComponent") {
             forViewers { updateName(it) }
         }
     }

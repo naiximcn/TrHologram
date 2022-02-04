@@ -64,7 +64,7 @@ class Texture(
         val FALL_BACK = ItemStack(Material.BEDROCK)
 
         fun createTexture(itemStack: ItemStack): Texture {
-            val material = itemStack.type.name.toLowerCase().replace("_", " ")
+            val material = itemStack.type.name.lowercase().replace("_", " ")
             val itemMeta = itemStack.itemMeta
 
             // Head Meta
@@ -121,7 +121,7 @@ class Texture(
         private fun parseMaterial(material: String): ItemStack {
             val split = material.split(":", limit = 2)
             val data = split.getOrNull(1)?.toIntOrNull() ?: 0
-            val id = split[0].toIntOrNull() ?: split[0].toUpperCase().replace("[ _]".toRegex(), "_")
+            val id = split[0].toIntOrNull() ?: split[0].uppercase().replace("[ _]".toRegex(), "_")
 
             return buildItem(XMaterial.matchXMaterial(FALL_BACK)) {
                 var rawMaterial = id

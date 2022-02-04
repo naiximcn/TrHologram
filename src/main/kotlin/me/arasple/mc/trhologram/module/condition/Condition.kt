@@ -10,7 +10,8 @@ import java.util.concurrent.CompletableFuture
  * @author Arasple
  * @date 2021/2/10 11:02
  */
-inline class Condition(private val expression: String) : BaseCondition {
+@JvmInline
+value class Condition(private val expression: String) : BaseCondition {
 
     override fun eval(player: Player): CompletableFuture<Boolean> {
         return if (expression.isEmpty()) CompletableFuture.completedFuture(true)
