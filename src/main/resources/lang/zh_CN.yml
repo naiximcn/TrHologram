@@ -10,6 +10,8 @@ Plugin-Update:
 Plugin-Dependency-Hooked: '&8[&2Tr&aHologram&8] &6HOOK &8| &7软依赖 &f{0} &7已兼容.'
 Plugin-Dependency-Abuse: '&8[&2Tr&aHologram&8] &6HOOK &8| &4试图使用未挂钩插件 &c{0}'
 
+Configuration-Auto-Reload: '&8[&2Tr&aHologram&8] &aFINE &8| &3检测到配置文件更改, 已自动重新载入...'
+
 Hologram-Loaded: '&8[&2Tr&aHologram&8] &aFINE &8| &a{0} &3个全息图已加载 &8({1} ms)'
 
 Paster-Processing: '&8[&2Tr&aHologram&8] &7正在粘贴内容 ...'
