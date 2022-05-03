@@ -5,11 +5,11 @@ import me.arasple.mc.trhologram.api.hologram.HologramComponent
 import me.arasple.mc.trhologram.api.hologram.ItemHologram
 import me.arasple.mc.trhologram.api.hologram.TextHologram
 import me.arasple.mc.trhologram.module.display.Hologram
-import me.arasple.mc.trhologram.module.service.Performance
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.function.adaptPlayer
+import taboolib.common5.mirrorNow
 import taboolib.library.kether.LocalizedException
 import taboolib.module.kether.KetherShell
 import java.util.concurrent.CompletableFuture
@@ -35,8 +35,8 @@ object TrHologramAPI {
 
     @JvmStatic
     fun eval(player: Player, script: String): CompletableFuture<Any?> {
-        Performance.check("Hologram:Handler:ScriptEval") {
-            return try {
+        mirrorNow("Hologram:Handler:ScriptEval") {
+            return@mirrorNow try {
                 KetherShell.eval(script, namespace = listOf("trhologram", "trmenu")) {
                     sender = adaptPlayer(player)
                 }

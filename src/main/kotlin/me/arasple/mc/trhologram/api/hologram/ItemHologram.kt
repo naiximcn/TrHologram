@@ -6,11 +6,11 @@ import me.arasple.mc.trhologram.api.base.ItemTexture
 import me.arasple.mc.trhologram.api.base.TickEvent
 import me.arasple.mc.trhologram.api.nms.packet.*
 import me.arasple.mc.trhologram.module.display.texture.Texture
-import me.arasple.mc.trhologram.module.service.Performance
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import taboolib.common.platform.function.submit
+import taboolib.common5.mirrorNow
 
 /**
  * @author Arasple
@@ -69,7 +69,7 @@ class ItemHologram(
     }
 
     override fun onTick() {
-        Performance.check("Hologram:Event:Tick:ItemComponent") {
+        mirrorNow("Hologram:Event:Tick:ItemComponent") {
             forViewers { updateItem(it) }
         }
     }

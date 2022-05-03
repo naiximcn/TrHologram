@@ -3,8 +3,8 @@ package me.arasple.mc.trhologram.api.nms
 import me.arasple.mc.trhologram.api.event.HologramInteractEvent
 import me.arasple.mc.trhologram.api.event.HologramInteractEvent.Type.*
 import me.arasple.mc.trhologram.module.display.Hologram
-import me.arasple.mc.trhologram.module.service.Performance
 import taboolib.common.platform.event.SubscribeEvent
+import taboolib.common5.mirrorNow
 import taboolib.module.nms.MinecraftVersion
 import taboolib.module.nms.PacketReceiveEvent
 
@@ -17,14 +17,14 @@ object NMSListener {
     @SubscribeEvent
     fun e(e: PacketReceiveEvent) {
         if (e.packet.name == "PacketPlayInUseEntity") {
-            Performance.check("Hologram:Event:Interact") {
+            mirrorNow("Hologram:Event:Interact") {
                 val entityId = e.packet.read<Int>("a").also {
                     if (it == null || it < 1197897763) {
-                        return
+                        return@mirrorNow
                     }
                 }
                 val hologram =
-                    Hologram.findHologram { it -> it.components.any { it.entityId == entityId } } ?: return
+                    Hologram.findHologram { it -> it.components.any { it.entityId == entityId } } ?: return@mirrorNow
 
                 val sneaking = e.player.isSneaking
                 if (MinecraftVersion.isUniversal) {

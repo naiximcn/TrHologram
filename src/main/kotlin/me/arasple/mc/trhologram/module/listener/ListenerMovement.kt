@@ -1,9 +1,10 @@
 package me.arasple.mc.trhologram.module.listener
 
 import me.arasple.mc.trhologram.module.display.Hologram
-import me.arasple.mc.trhologram.util.Cooldown
 import org.bukkit.event.player.PlayerMoveEvent
 import taboolib.common.platform.event.SubscribeEvent
+import taboolib.common5.Baffle
+import java.util.concurrent.TimeUnit
 
 /**
  * @author Arasple
@@ -11,13 +12,13 @@ import taboolib.common.platform.event.SubscribeEvent
  */
 object ListenerMovement {
 
-    val cd = Cooldown("TrHologram:MoveCheck", 1)
+    val cd = Baffle.of(1, TimeUnit.SECONDS)
 
     @SubscribeEvent
     fun onMove(e: PlayerMoveEvent) {
         val player = e.player
 
-        if (!cd.isCooldown(player.name)) {
+        if (!cd.hasNext(player.name)) {
             Hologram.refreshAll(player)
         }
     }
